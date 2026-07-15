@@ -1,0 +1,40 @@
+<section class="py-20 bg-white px-4">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- Encabezado de la Sección -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <!-- Badge de contexto -->
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-600 mb-4 tracking-wider uppercase">
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+        Temporada 2026
+      </span>
+      
+      <h2 class="text-3xl md:text-4xl font-black text-slate-950 tracking-tight">
+        Los recomendados de La Feliz
+      </h2>
+      <p class="text-sm md:text-base text-slate-500 font-semibold mt-3 leading-relaxed">
+        Paradores destacados por su servicio, atención y comodidad.
+      </p>
+    </div>
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      
+      <app-resort-card 
+        *ngFor="let resort of resorts" 
+        [resort]="resort"
+        class="h-full">
+      </app-resort-card>
+
+    </div>
+
+    <div *ngIf="resorts.length === 0" class="flex flex-col items-center justify-center py-12 text-center">
+      <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-2xl mb-4 text-slate-400">
+        🏝️
+      </div>
+      <h3 class="font-bold text-slate-700 text-lg">Buscando los mejores paradores...</h3>
+      <p class="text-xs text-slate-400 mt-1">Estamos conectando con el servidor de Mar del Plata.</p>
+    </div>
+
+  </div>
+</section>

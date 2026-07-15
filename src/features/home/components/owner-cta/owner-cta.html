@@ -1,0 +1,74 @@
+<section class="py-12 bg-slate-50 px-4">
+  <div class="max-w-7xl mx-auto">
+    <!-- Contenedor principal con degradado y bordes redondeados premium -->
+    <div class="relative overflow-hidden bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 rounded-3xl shadow-xl px-8 py-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12">
+      
+      <!-- Luces de fondo decorativas para efecto de profundidad (Blur Glow) -->
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Izquierda: Propuesta de valor principal -->
+      <div class="relative z-10 max-w-2xl text-center lg:text-left">
+        <!-- Badge sutil con vocabulario del sector -->
+        <span class="text-sky-400 text-xs font-black uppercase tracking-widest mb-3 block">
+          Para concesionarios y propietarios
+        </span>
+        
+        <!-- Título corregido y natural -->
+        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-4 leading-tight">
+          ¿Tenés un balneario o parador?
+        </h2>
+        
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-8">
+          Digitalizá tu espacio este verano de la forma más fácil. Gestioná tu disponibilidad, evitá el teléfono ocupado y recibí las señas de tus clientes directamente en tu CBU o Alias, sin intermediarios ni comisiones. Pasá del cuaderno de papel al control total de tu temporada.
+        </p>
+        
+        <!-- Botón de acción con micro-interacciones -->
+        <button 
+          (click)="onRegisterClick()"
+          class="bg-sky-500 hover:bg-sky-400 text-white font-black px-8 py-4 rounded-2xl shadow-lg shadow-sky-500/20 transition-all duration-200 active:scale-95 text-sm md:text-base tracking-wide w-full sm:w-auto">
+          Sumar mi Balneario Gratis
+        </button>
+      </div>
+
+      <!-- Derecha: Tarjetas de beneficios con Ng Icons -->
+      <div class="relative z-10 w-full lg:w-auto grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-col gap-4 shrink-0">
+        
+        <!-- Beneficio 1: Cero comisiones -->
+        <div class="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+<ng-icon name="heroCurrencyDollar" class="text-xl text-emerald-400"></ng-icon>
+          </div>
+          <div class="text-left">
+            <h4 class="text-white font-bold text-sm">Cero comisiones</h4>
+            <p class="text-slate-400 text-xs font-medium">La ganancia es 100% tuya</p>
+          </div>
+        </div>
+
+        <!-- Beneficio 2: Seña por CBU/Alias -->
+        <div class="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0">
+         <ng-icon name="heroBolt" class="text-xl text-amber-400"></ng-icon>
+          </div>
+          <div class="text-left">
+            <h4 class="text-white font-bold text-sm">Seña por CBU/Alias</h4>
+            <p class="text-slate-400 text-xs font-medium">Transferencia inmediata</p>
+          </div>
+        </div>
+
+        <!-- Beneficio 3: Chau cuaderno -->
+        <div class="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center shrink-0">
+         <ng-icon name="heroBookOpen" class="text-xl text-sky-700"></ng-icon>
+          </div>
+          <div class="text-left">
+            <h4 class="text-white font-bold text-sm">Chau cuaderno</h4>
+            <p class="text-slate-400 text-xs font-medium">Control digital de carpas</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>

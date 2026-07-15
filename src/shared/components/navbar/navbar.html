@@ -1,0 +1,126 @@
+<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 md:px-8 py-3.5 transition-all duration-300">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    
+
+    <div class="flex items-center gap-6">
+
+      <a href="#" class="flex items-center gap-2 text-xl font-black text-slate-900 tracking-tight shrink-0 group">
+
+        <img 
+          src="assets/logo-navbar.png" 
+          alt="BalnearMDP Logo" 
+          class="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+        />
+      </a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-1 lg:gap-2">
+      <div class="relative">
+        <button 
+          (click)="toggleZonesMenu()" 
+          class="flex items-center gap-1.5 text-sm font-bold text-slate-600 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200">
+          <span>Zonas</span>
+          <ng-icon 
+            name="heroChevronDown" 
+            class="text-[10px] text-slate-400 transition-transform duration-200"
+            [class.rotate-180]="isZonesMenuOpen">
+          </ng-icon>
+        </button>
+        
+        <div *ngIf="isZonesMenuOpen" class="absolute left-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 flex flex-col gap-1 z-50 animate-fade-in">
+          <a href="#" class="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-sky-600 hover:bg-sky-50/50 p-2.5 rounded-xl transition-colors">
+            <ng-icon name="heroMapPin" class="text-xs text-sky-500"></ng-icon>
+            Playa Grande
+          </a>
+          <a href="#" class="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-sky-600 hover:bg-sky-50/50 p-2.5 rounded-xl transition-colors">
+            <ng-icon name="heroMapPin" class="text-xs text-sky-500"></ng-icon>
+            Punta Mogotes
+          </a>
+          <a href="#" class="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-sky-600 hover:bg-sky-50/50 p-2.5 rounded-xl transition-colors">
+            <ng-icon name="heroMapPin" class="text-xs text-sky-500"></ng-icon>
+            Zona Sur
+          </a>
+          <a href="#" class="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-sky-600 hover:bg-sky-50/50 p-2.5 rounded-xl transition-colors">
+            <ng-icon name="heroMapPin" class="text-xs text-sky-500"></ng-icon>
+            La Perla / Centro
+          </a>
+        </div>
+      </div>
+
+      <a href="#" class="text-sm font-bold text-slate-600 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200">Precios 2026</a>
+      <a href="#" class="text-sm font-bold text-slate-600 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200">¿Cómo reservar?</a>
+      <a href="#" class="text-sm font-bold text-slate-600 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200">Ayuda</a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-4">
+      
+
+      <button class="relative p-2.5 text-slate-400 hover:text-rose-500 hover:bg-rose-50/50 rounded-xl transition-all duration-200" title="Mis Favoritos">
+        <ng-icon name="heroHeart" class="text-xl"></ng-icon>
+
+        <span class="absolute top-1 right-1 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white">
+          {{ favoritesCount }}
+        </span>
+      </button>
+
+      <!-- Botón de Iniciar Sesión (Acceso Cliente) -->
+      <button class="text-sm font-extrabold text-slate-700 hover:text-sky-600 transition-colors px-3 py-2.5 rounded-xl">
+        Ingresar
+      </button>
+
+      <!-- CTA Principal Propietario -->
+      <button class="bg-slate-900 hover:bg-sky-600 text-white font-black px-5 py-2.5 rounded-xl text-xs tracking-wide shadow-sm hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-200 active:scale-95">
+        Ofrecé tu Balneario
+      </button>
+    </div>
+
+    <button 
+      (click)="toggleMenu()" 
+      class="md:hidden p-2 rounded-xl hover:bg-slate-50 transition-colors text-slate-600 focus:outline-none">
+      <ng-icon *ngIf="!isMobileMenuOpen" name="heroBars3" class="text-2xl"></ng-icon>
+      <ng-icon *ngIf="isMobileMenuOpen" name="heroXMark" class="text-2xl"></ng-icon>
+    </button>
+
+  </div>
+
+
+  <div 
+    *ngIf="isMobileMenuOpen" 
+    class="md:hidden mt-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-xl flex flex-col gap-3 animate-fade-in">
+    
+    <!-- Widget de clima para mobile -->
+    <div class="flex items-center justify-between bg-sky-50/50 px-4 py-2.5 rounded-xl text-xs font-bold text-sky-800">
+      <div class="flex items-center gap-1.5">
+        <ng-icon name="heroSun" class="text-sm text-amber-500"></ng-icon>
+        <span>Clima en Mar del Plata</span>
+      </div>
+      <span class="text-sky-600">24°C</span>
+    </div>
+
+
+    <a href="#" class="text-sm font-bold text-slate-700 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50">Zonas</a>
+    <a href="#" class="text-sm font-bold text-slate-700 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50">Precios 2026</a>
+    <a href="#" class="text-sm font-bold text-slate-700 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50">¿Cómo reservar?</a>
+    
+    <div class="h-px bg-slate-100 my-1"></div>
+
+
+    <a href="#" class="flex items-center justify-between text-sm font-bold text-slate-700 hover:text-sky-600 px-3 py-2 rounded-xl hover:bg-slate-50">
+      <div class="flex items-center gap-2">
+        <ng-icon name="heroHeart" class="text-base text-rose-500"></ng-icon>
+        <span>Mis Favoritos</span>
+      </div>
+      <span class="bg-rose-100 text-rose-600 px-2.5 py-0.5 rounded-full text-xs font-black">{{ favoritesCount }}</span>
+    </a>
+
+
+    <div class="grid grid-cols-2 gap-3 mt-2">
+      <button class="border border-slate-200 text-slate-700 hover:bg-slate-50 font-extrabold py-3 rounded-xl text-xs">
+        Iniciar Sesión
+      </button>
+      <button class="bg-sky-600 hover:bg-sky-500 text-white font-black py-3 rounded-xl text-xs">
+        Ofrecé tu Balneario
+      </button>
+    </div>
+  </div>
+</nav>

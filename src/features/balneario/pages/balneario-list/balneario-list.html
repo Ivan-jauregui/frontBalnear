@@ -1,0 +1,15 @@
+<div class="page-container">
+    <h2>Nuestros balnearios</h2>
+
+    @if(isLoading()){
+        <div class="loader">Cargando los balnearios</div>
+    }@else if (errorMessage()) {
+        <div class="error-banner">{{ errorMessage() }}</div>
+    } @else{
+        @for (balneario of balnearios(); track balneario.id) {
+            <balneario-card [balneario]="balneario"></balneario-card>
+        }@empty {
+        <p class="empty-state">No hay balnearios registrados </p>
+      }
+    }
+</div>

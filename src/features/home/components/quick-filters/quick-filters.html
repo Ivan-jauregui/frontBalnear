@@ -1,0 +1,84 @@
+<section class="py-16 bg-slate-50 border-b border-slate-100 px-4">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- Encabezado de la Sección -->
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h2 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+        Buscá por lo que te importa
+      </h2>
+      <p class="text-sm md:text-base text-slate-500 font-semibold mt-2">
+        Hacé click en lo que no te puede faltar este verano:
+      </p>
+    </div>
+
+    <!-- Grilla de Filtros -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      
+      <!-- Card 1: Pileta -->
+      <button 
+        (click)="emitFilter('pool')"
+        class="group flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-sky-500/5 border border-slate-100 hover:border-sky-500/30 transition-all duration-300 transform hover:-translate-y-1.5 focus:outline-none w-full">
+        <div class="w-14 h-14 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-sky-100">
+          <ng-icon name="heroSparkles" class="text-xl text-sky-600"></ng-icon>
+        </div>
+        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-sky-600 transition-colors">Pileta Premium</h3>
+        <p class="text-xs text-slate-400 font-medium leading-relaxed">
+          Para refrescarte cuando el mar está picado.
+        </p>
+      </button>
+
+      <!-- Card 2: Pet Friendly -->
+      <button 
+        (click)="emitFilter('pet-friendly')"
+        class="group flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-amber-500/5 border border-slate-100 hover:border-amber-500/30 transition-all duration-300 transform hover:-translate-y-1.5 focus:outline-none w-full">
+        <div class="w-14 h-14 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-amber-100">
+          <ng-icon name="heroHeart" class="text-xl text-amber-600"></ng-icon>
+        </div>
+        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-amber-600 transition-colors">Pet Friendly</h3>
+        <p class="text-xs text-slate-400 font-medium leading-relaxed">
+          Tu mascota también merece vacaciones.
+        </p>
+      </button>
+
+      <!-- Card 3: Cochera -->
+      <button 
+        (click)="emitFilter('parking')"
+        class="group flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 border border-slate-100 hover:border-indigo-500/30 transition-all duration-300 transform hover:-translate-y-1.5 focus:outline-none w-full">
+        <div class="w-14 h-14 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-indigo-100">
+          <ng-icon name="heroKey" class="text-xl text-indigo-600"></ng-icon>
+        </div>
+        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-indigo-600 transition-colors">Cochera Reservada</h3>
+        <p class="text-xs text-slate-400 font-medium leading-relaxed">
+          Olvidate de dar vueltas para estacionar.
+        </p>
+      </button>
+
+      <!-- Card 4: Gastronomía -->
+      <button 
+        (click)="emitFilter('restaurant')"
+        class="group flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-rose-500/5 border border-slate-100 hover:border-rose-500/30 transition-all duration-300 transform hover:-translate-y-1.5 focus:outline-none w-full">
+        <div class="w-14 h-14 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-rose-100">
+          <ng-icon name="heroFire" class="text-xl text-rose-600"></ng-icon>
+        </div>
+        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-rose-600 transition-colors">Gastronomía</h3>
+        <p class="text-xs text-slate-400 font-medium leading-relaxed">
+          Los mejores paradores con cocina de autor.
+        </p>
+      </button>
+
+      <!-- Card 5: Accesible -->
+      <button 
+        (click)="emitFilter('accessible')"
+        class="group flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 border border-slate-100 hover:border-emerald-500/30 transition-all duration-300 transform hover:-translate-y-1.5 focus:outline-none w-full">
+        <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:bg-emerald-100">
+          <ng-icon name="heroUserGroup" class="text-xl text-emerald-600"></ng-icon>
+        </div>
+        <h3 class="font-bold text-slate-800 text-base mb-2 group-hover:text-emerald-600 transition-colors">Accesible</h3>
+        <p class="text-xs text-slate-400 font-medium leading-relaxed">
+          Estructura adaptada y cómoda para todos.
+        </p>
+      </button>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,77 @@
+<div class="group flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 h-full">
+  
+
+  <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
+    <img 
+      [src]="resort.imageUrl" 
+      [alt]="resort.name"
+      class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+    />
+    
+    <!-- Badge de Recomendado (Reemplazo de ⭐) -->
+    <span class="absolute top-4 left-4 bg-white/95 backdrop-blur-md text-sky-950 text-[11px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
+      <ng-icon name="heroStar" class="text-xs text-amber-500 stroke-[2.5]"></ng-icon>
+      Destacado
+    </span>
+  </div>
+
+  <!-- Contenido -->
+  <div class="p-6 flex flex-col flex-grow">
+    
+
+    <span class="flex items-center gap-1 text-xs font-bold text-sky-600 uppercase tracking-widest mb-2">
+      <ng-icon name="heroMapPin" class="text-xs text-sky-500"></ng-icon>
+      {{ resort.zone }}
+    </span>
+    
+    <!-- Nombre del Balneario -->
+    <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-sky-600 transition-colors mb-4 leading-snug">
+      {{ resort.name }}
+    </h3>
+
+    <!-- Badges de Servicios Rápidos (Icons dinámicos) -->
+    <div class="flex items-center gap-2 mb-6">
+      <!-- Pileta -->
+      <span 
+        *ngIf="resort.hasPool" 
+        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-sky-50 text-sky-600" 
+        title="Pileta disponible">
+        <ng-icon name="heroSparkles" class="text-sm"></ng-icon>
+      </span>
+      
+      <!-- Pet Friendly -->
+      <span 
+        *ngIf="resort.isPetFriendly" 
+        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-50 text-amber-600" 
+        title="Pet Friendly">
+        <ng-icon name="heroHeart" class="text-sm"></ng-icon>
+      </span>
+      
+      <!-- Cochera -->
+      <span 
+        *ngIf="resort.hasParking" 
+        class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-50 text-indigo-600" 
+        title="Estacionamiento">
+        <ng-icon name="heroKey" class="text-sm"></ng-icon>
+      </span>
+    </div>
+
+
+    <div class="w-full h-px bg-slate-100 my-auto mb-4"></div>
+
+    <div class="flex items-center justify-between mt-auto">
+      <div class="flex flex-col">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Precio por día</span>
+        <span class="text-lg font-black text-slate-900">
+          ${{ resort.price | number:'1.0-0' }}
+        </span>
+      </div>
+      
+      <!-- Botón de Acción -->
+      <button class="bg-slate-900 hover:bg-sky-600 text-white font-bold text-xs px-4 py-3 rounded-xl transition-all duration-200 active:scale-95">
+        Ver disponibilidad
+      </button>
+    </div>
+
+  </div>
+</div>
