@@ -81,6 +81,7 @@ export class CreateBalneario {
           description: formValue.description,
           address: formValue.address,
           price: formValue.price,
+          zone: formValue.zone,
           ownerId: formValue.ownerId,
           amenities: Array.from(this.selected())
         }

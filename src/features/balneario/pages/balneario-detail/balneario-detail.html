@@ -1,0 +1,137 @@
+<!-- CONTENEDOR PRINCIPAL -->
+<div class="min-h-screen bg-slate-50 p-4 md:p-8">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- BOTÓN VOLVER (UX: Navegación clara) -->
+    <div class="mb-6">
+      <a routerLink="/balnearios" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-sky-600 transition-colors group p-2 rounded-xl hover:bg-sky-50">
+        <ng-icon name="heroArrowLeft" class="text-base transition-transform group-hover:-translate-x-1"></ng-icon>
+        Volver al listado
+      </a>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ESTADO: CARGANDO (Skeleton Loader Pro)     -->
+    <!-- ========================================== -->
+    @if (isLoading()) {
+      <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden animate-pulse">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <!-- Skeleton Imagen -->
+          <div class="aspect-[4/3] md:aspect-auto bg-slate-200"></div>
+          <!-- Skeleton Info -->
+          <div class="p-8 md:p-12 flex flex-col gap-6">
+            <div class="h-4 bg-slate-200 rounded-full w-1/4"></div>
+            <div class="h-10 bg-slate-200 rounded-full w-3/4"></div>
+            <div class="h-20 bg-slate-200 rounded-2xl w-full"></div>
+            <div class="flex gap-3">
+              <div class="w-10 h-10 bg-slate-200 rounded-full"></div>
+              <div class="w-10 h-10 bg-slate-200 rounded-full"></div>
+            </div>
+            <div class="mt-auto h-16 bg-slate-200 rounded-2xl w-full"></div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ========================================== -->
+    <!-- ESTADO: ERROR                              -->
+    <!-- ========================================== -->
+    @else if (errorMessage()) {
+      <div class="max-w-xl mx-auto my-16 p-8 bg-white rounded-3xl shadow-lg border border-rose-100 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-6">
+          <ng-icon name="heroExclamationTriangle" class="text-3xl"></ng-icon>
+        </div>
+        <h3 class="text-xl font-black text-slate-900 mb-2">No pudimos cargar los detalles</h3>
+        <p class="text-slate-500 text-sm mb-6">{{ errorMessage() }}</p>
+        <a routerLink="/balnearios" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition-all">
+          Volver a intentar
+        </a>
+      </div>
+    }
+
+    <!-- ========================================== -->
+    <!-- ESTADO: DATOS CARGADOS (UI Aspiracional)   -->
+    <!-- ========================================== -->
+    @else if (balneario(); as b) {
+      <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/5">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          
+          <!-- COLUMNA IZQ: IMAGEN HÉROE -->
+          <div class="relative aspect-[4/3] md:aspect-auto overflow-hidden bg-slate-100 group">
+            <img 
+              [src]="b.imageUrl || 'assets/placeholder-balneario.jpg'" 
+              [alt]="b.name"
+              class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+            />
+            <!-- Badge flotante (opcional si tenés info de ranking/estrellas) -->
+            <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md flex items-center gap-2">
+              <ng-icon name="heroSparkles" class="text-amber-500 text-sm"></ng-icon>
+              <span class="text-xs font-black text-slate-900 uppercase tracking-wider">Recomendado</span>
+            </div>
+          </div>
+
+          <!-- COLUMNA DER: INFORMACIÓN Y ACCIONES -->
+          <div class="p-8 md:p-12 lg:p-16 flex flex-col">
+            
+            <!-- Ubicación y Zona -->
+            <div class="flex items-center gap-2 text-sky-600 mb-3">
+              <ng-icon name="heroMapPin" class="text-lg"></ng-icon>
+              <span class="text-sm font-bold uppercase tracking-widest">{{ b.zone }} — Mar del Plata</span>
+            </div>
+
+            <!-- Nombre Grande -->
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-tight mb-6">
+              {{ b.name }}
+            </h1>
+
+            <!-- Descripción (UX: Texto legible)
+            <div class="prose prose-slate prose-sm max-w-none text-slate-600 mb-10 leading-relaxed">
+              <p>{{ b.description || 'Disfrutá de un verano inolvidable en nuestras instalaciones equipadas para toda la familia frente al mar argentino.' }}</p>
+            </div>
+
+            Servicios Destacados (Iconos Profesionales)
+            <div class="mb-12">
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Servicios incluidos</h4>
+              <div class="flex flex-wrap gap-3">
+            
+                <span *ngIf="b.hasPool" class="inline-flex items-center gap-2.5 bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl border border-slate-100 text-sm font-medium" title="Pileta climatizada">
+                  <ng-icon name="heroSun" class="text-lg text-sky-500"></ng-icon>
+                  Pileta
+                </span>
+
+                <span *ngIf="b.isPetFriendly" class="inline-flex items-center gap-2.5 bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl border border-slate-100 text-sm font-medium" title="Aceptamos mascotas">
+                  <ng-icon name="heroHeart" class="text-lg text-amber-500"></ng-icon>
+                  Pet Friendly
+                </span>
+           
+                <span *ngIf="b.hasParking" class="inline-flex items-center gap-2.5 bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl border border-slate-100 text-sm font-medium" title="Estacionamiento cubierto">
+                  <ng-icon name="heroKey" class="text-lg text-indigo-500"></ng-icon>
+                  Cochera
+                </span>
+              </div>
+            </div> -->
+
+            <!-- FOOTER: PRECIO Y CTA (Fijado abajo en desktop) -->
+            <div class="mt-auto pt-8 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-slate-50 md:bg-white -mx-8 -mb-8 md:m-0 p-8 md:p-0 md:pt-8 rounded-b-3xl md:rounded-none">
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Precio por día (desde)</span>
+                <span class="text-3xl font-black text-slate-900">
+                  {{ b.price | currency:'ARS':'symbol':'1.0-0' }}
+                </span>
+                <span class="text-xs text-emerald-600 font-semibold mt-1">Sujeto a disponibilidad</span>
+              </div>
+              
+              <!-- Botón de Acción Principal -->
+              <button class="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-black text-sm px-10 py-4 rounded-2xl shadow-lg shadow-sky-500/20 transition-all duration-300 transform hover:-translate-y-1 active:scale-95 active:translate-y-0 flex items-center justify-center gap-2">
+                <ng-icon name="heroSparkles"></ng-icon>
+                Reservar Carpa
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    }
+    
+  </div>
+</div>
