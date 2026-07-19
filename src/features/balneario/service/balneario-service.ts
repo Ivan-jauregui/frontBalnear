@@ -21,6 +21,10 @@ export class BalnearioService {
     );
   }
 
+  getById(id:number):Observable<BalnearioResponse>{
+    return this.http.get<BalnearioResponse>(`${this.apiUrl}/${id}`)
+  }
+
 
   save(balneario:BalnearioRequest): Observable<BalnearioResponse>{
     return this.http.post<BalnearioResponse>(this.apiUrl,balneario);

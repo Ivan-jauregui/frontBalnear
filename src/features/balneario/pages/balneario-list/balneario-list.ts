@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { BalnearioService } from '../../service/balneario-service';
 import { BalnearioResponse } from '../../models/balnearioResponse';
 import { Card } from "../../components/card/card";
@@ -38,6 +38,7 @@ export class BalnearioList implements OnInit {
   balnearios=signal<BalnearioResponse[]>([]);
   isLoading=signal<boolean>(true);
   errorMessage = signal<string | null>(null);
+  enteredText = signal('');
 
   ngOnInit():void{
     this.loadBalnearios()
@@ -71,5 +72,19 @@ export class BalnearioList implements OnInit {
     })
   }
 
+
+  onSearch(text:string){
+    this.enteredText.set(text)
+  }
+
+  filteredBalnearios=computed(()=>{
+    const term = this.enteredText().toLowerCase().trim();
+    if(!term) return this.balnearios();
+
+
+    return this.balnearios().filter(b=>
+      b.name.toLowerCase().includes(term)
+    )
+  })
 
 }
