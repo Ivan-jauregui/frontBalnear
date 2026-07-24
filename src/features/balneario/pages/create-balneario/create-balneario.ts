@@ -6,10 +6,18 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BalnearioRequest } from '../../models/balnearioRequest';
 import { BalnearioService } from '../../service/balneario-service';
+import { provideIcons, NgIcon } from '@ng-icons/core';
+import { heroExclamationTriangle, heroSparkles } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-create-balneario',
-  imports: [AmenitiesList,ReactiveFormsModule],
+  imports: [AmenitiesList, ReactiveFormsModule, NgIcon],
+   providers: [
+    provideIcons({ 
+      heroSparkles, 
+      heroExclamationTriangle, 
+    })
+  ],
   templateUrl: './create-balneario.html',
   styleUrl: './create-balneario.css',
 })

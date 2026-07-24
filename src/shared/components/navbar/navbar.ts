@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { 
@@ -9,6 +9,7 @@ import {
   heroBars3, 
   heroXMark 
 } from '@ng-icons/heroicons/outline';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -30,6 +31,8 @@ import {
 export class Navbar {
   @Input() favoritesCount = 2; // Cantidad mockeada de favoritos guardados
   
+  private router = inject(Router);
+
   isZonesMenuOpen = false;
   isMobileMenuOpen = false;
 
@@ -39,5 +42,10 @@ export class Navbar {
 
   toggleMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  
+  redirectContact(){
+    this.router.navigate(['balneario/create'])
   }
 }
