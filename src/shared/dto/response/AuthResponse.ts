@@ -1,3 +1,5 @@
 export interface AuthReponse {
-    token:string;
+    accessToken:string;
+    refreshToken:string;
+    tokenType?:string;
 }

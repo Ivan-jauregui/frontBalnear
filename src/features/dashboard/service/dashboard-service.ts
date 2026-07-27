@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserResponse } from '../../../shared/dto/UserResponse';
+import { UserResponse } from '../../../shared/dto/response/UserResponse';
+
 
 
 

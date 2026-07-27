@@ -10,6 +10,7 @@ import {
   heroXMark 
 } from '@ng-icons/heroicons/outline';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../app/core/service/auth-service';
 
 @Component({
   selector: 'app-navbar',
@@ -31,6 +32,7 @@ import { Router } from '@angular/router';
 export class Navbar {
   @Input() favoritesCount = 2; // Cantidad mockeada de favoritos guardados
   
+  authService = inject(AuthService);
   private router = inject(Router);
 
   isZonesMenuOpen = false;

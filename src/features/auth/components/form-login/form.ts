@@ -1,13 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { userRegisterRequest } from '../../../../../shared/dto/request/UserRegisterRequest';
-import { UserLoginRequest } from '../../../../../shared/dto/request/UserLoginRequest';
-import { AuthService } from '../../../shared/service/auth-service';
-import { Router } from '@angular/router';
+import { userRegisterRequest } from '../../../../shared/dto/request/UserRegisterRequest';
+import { UserLoginRequest } from '../../../../shared/dto/request/UserLoginRequest';
+import { AuthService } from '../../../../app/core/service/auth-service';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+/*
+USUARIO DE PRUEBA
+Email: ivanjauregui80@gmail.com
+Contraseña: ....
+*/
 
 @Component({
   selector: 'form-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink,CommonModule],
   templateUrl: './form.html',
   styleUrl: './form.css',
 })
@@ -26,11 +33,13 @@ export class Form {
   }
 
   login(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-    if (this.form.valid) {
       const formValue = this.form.value;
 
-      console.log("hla")
 
       const user: UserLoginRequest = {
         email: formValue.email,
@@ -40,13 +49,11 @@ export class Form {
       this.authService.login(user).subscribe({
         next: (response: any) => {
           localStorage.setItem('token', response.token);
+          window.alert("Sesion Iniciada")
           this.router.navigate(['/']);
         },
         error: (err) => console.error('Error de credenciales', err)
       });
-    } else {
-      console.log('El formulario tiene errores de validación');
     }
   }
 
-}
