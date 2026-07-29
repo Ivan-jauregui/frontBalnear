@@ -44,11 +44,32 @@
       <input 
         id="address"
         type="text" 
-        placeholder="Ej: Paseo Victoria Ocampo 100, Playa Grande" 
+        placeholder="Ej: Paseo Victoria Ocampo 100" 
         formControlName="address"
         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
       />
     </div>
+
+    
+    <!-- FILA 3: Zona -->
+   <!-- FILA 4: Zona (Desplegable) -->
+<div class="flex flex-col gap-2">
+  <label for="zone" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+    Zona
+  </label>
+  <select 
+    id="zone"
+    formControlName="zone"
+    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
+  >
+    <option value="" disabled selected>Selecciona una zona</option>
+    <option value="Playa Grande">Playa Grande</option>
+    <option value="Centro / La Perla">Centro / La Perla</option>
+    <option value="Punta Mogotes">Punta Mogotes</option>
+    <option value="Zona Sur">Zona Sur</option>
+  </select>
+</div>
+
 
     <!-- FILA 4: Precio y Dueño (Grid de 2 columnas) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -42,6 +42,7 @@ export class CreateBalneario {
     this.form=this.fb.group({
       name:['',Validators.required],
       description:['',Validators.required],
+      zone:['',Validators.required],
       address:['',Validators.required],
       price:['',Validators.required],
       ownerId:['',Validators.required],

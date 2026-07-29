@@ -5,6 +5,7 @@ import { UserLoginRequest } from '../../../../shared/dto/request/UserLoginReques
 import { AuthService } from '../../../../app/core/service/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserResponse } from '../../../../shared/dto/response/UserResponse';
 
 /*
 USUARIO DE PRUEBA
@@ -47,8 +48,7 @@ export class Form {
       }
 
       this.authService.login(user).subscribe({
-        next: (response: any) => {
-          localStorage.setItem('token', response.token);
+        next: (user: UserResponse) => {
           window.alert("Sesion Iniciada")
           this.router.navigate(['/']);
         },

@@ -1,0 +1,42 @@
+<div class="min-h-screen bg-slate-50 p-6 md:p-8 font-sans">
+  
+  <!-- Cabecera del Dashboard -->
+  <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Panel de Control</h1>
+      <p class="text-sm text-slate-500 mt-1">Bienvenido de nuevo, visualiza el rendimiento de tu balnearios.</p>
+    </div>
+    <button class="inline-flex items-center justify-center px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-colors duration-200">
+      Descargar Reporte
+    </button>
+  </header>
+
+  <!-- Tarjetas de Métricas (KPIs) -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div *ngFor="let item of metrics" class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+      <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">{{ item.label }}</span>
+      <div class="flex items-baseline justify-between mt-3">
+        <span class="text-2xl font-bold text-slate-800">{{ item.value }}</span>
+        <span 
+          class="text-xs font-semibold px-2.5 py-1 rounded-md"
+          [ngClass]="item.isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'">
+          {{ item.change }}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seccion Principal: Gráfico -->
+  <section class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+    <div class="mb-4">
+      <h2 class="text-lg font-bold text-slate-800">Rendimiento de Reservas</h2>
+      <p class="text-xs text-slate-400">Evolución mensual del flujo de clientes</p>
+    </div>
+
+    <!-- Componente de tu gráfico -->
+    <div class="w-full overflow-hidden">
+      <app-graphic></app-graphic>
+    </div>
+  </section>
+
+</div>

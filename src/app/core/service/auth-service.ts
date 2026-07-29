@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { userRegisterRequest } from '../../../shared/dto/request/UserRegisterRequest';
 import { UserLoginRequest } from '../../../shared/dto/request/UserLoginRequest';
-import { Observable,tap } from 'rxjs';
+import { Observable,switchMap,tap } from 'rxjs';
 import { AuthReponse } from '../../../shared/dto/response/AuthResponse';
 import { UserResponse } from '../../../shared/dto/response/UserResponse';
 import { Router } from '@angular/router';
@@ -33,27 +33,29 @@ export class AuthService {
     }
   }
 
-  register(userRegisterRequest: userRegisterRequest): Observable<AuthReponse> {
+  register(userRegisterRequest: userRegisterRequest): Observable<UserResponse> {
     return this.http.post<AuthReponse>(`${this.apiUrl}/register`, userRegisterRequest).pipe(
       tap((response) => {
         this.saveTokens(response.accessToken, response.refreshToken);
-      })
-    );
+      }),
+     switchMap(() => this.fetchCurrentUser()) 
+    )
+    
   }
 
-  login(userLoginRequest: UserLoginRequest): Observable<AuthReponse> {
+  login(userLoginRequest: UserLoginRequest): Observable<UserResponse> {
     return this.http.post<AuthReponse>(`${this.apiUrl}/login`, userLoginRequest).pipe(
       tap((response) => {
         this.saveTokens(response.accessToken, response.refreshToken);
-        window.alert(this.currentUser());
-      })
+      }),
+     switchMap(() => this.fetchCurrentUser()) 
     );
   }
 
   fetchCurrentUser(): Observable<UserResponse> {
-  return this.http.get<UserResponse>('http://localhost:8080/api/v1/users/me').pipe(
+  return this.http.get<UserResponse>('http://localhost:8080/api/v1/user/me').pipe(
     tap(user => this.currentUser.set(user))
-  );
+  )
 }
 
   refreshToken(): Observable<AuthReponse> {
@@ -71,7 +73,6 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }
-
 
   // Verificacion para ver si tiene el role
   hasAnyRole(requiredRoles:string[]):boolean{

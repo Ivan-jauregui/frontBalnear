@@ -9,13 +9,13 @@ import {
   heroBars3, 
   heroXMark 
 } from '@ng-icons/heroicons/outline';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../app/core/service/auth-service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, NgIcon],
+  imports: [CommonModule, NgIcon, RouterLink],
   providers: [
     provideIcons({ 
       heroSun, 
