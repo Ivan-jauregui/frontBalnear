@@ -8,12 +8,14 @@ import { BalnearioDetail } from '../features/balneario/pages/balneario-detail/ba
 import { CreateBalneario } from '../features/balneario/pages/create-balneario/create-balneario';
 import { UploadImage } from '../features/balneario/pages/upload-image/upload-image';
 
+import {BookingReserve} from '../features/reservation/pages/booking-reserve/booking-reserve'
+
 import { DashboardOwner } from '../features/dashboard/pages/dashboard-owner/dashboard-owner';
 
 import { Login } from '../features/auth/pages/login/login';
 import { Register } from '../features/auth/pages/register/register';
 
-// 1. Corregida la ruta del Guard (ajusta a la ruta real de tu proyecto si está en ../core)
+
 import { authGuard } from './core/guards/auth-guard'; 
 
 export const routes: Routes = [
@@ -27,7 +29,9 @@ export const routes: Routes = [
     { path: 'balneario/create', component: CreateBalneario, canActivate: [authGuard] },
     { path: 'balneario/:id/imagen', component: UploadImage, canActivate: [authGuard] },
 
-    // 2. Corregido: Se quitó la barra inicial '/' de '/dashboard'
+    {path: 'reserve',component: BookingReserve},
+
+    // Dashboard'
     { path: 'dashboard', component: DashboardOwner },
 
     // Logeo y registro

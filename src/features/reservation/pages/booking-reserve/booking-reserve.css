@@ -1,0 +1,19 @@
+/* Pinta el fondo azul de los días que están dentro del rango */
+:host ::ng-deep .mat-calendar-body-cell.selected-range-date .mat-calendar-body-cell-content {
+  background-color: #1e40af !important; /* Azul claro (Tailwind bg-blue-100) */
+  color: #dbeafe !important;           /* Texto azul oscuro */
+  border-radius: 0 !important;          /* Quita el borde redondo para crear una franja continua */
+  font-weight: 600 !important;
+}
+
+/* Redondea los bordes izquierdos del primer día del rango */
+:host ::ng-deep .mat-calendar-body-cell.selected-range-date:first-child .mat-calendar-body-cell-content {
+  border-top-left-radius: 9999px !important;
+  border-bottom-left-radius: 9999px !important;
+}
+
+/* Redondea los bordes derechos del último día del rango */
+:host ::ng-deep .mat-calendar-body-cell.selected-range-date:last-child .mat-calendar-body-cell-content {
+  border-top-right-radius: 9999px !important;
+  border-bottom-right-radius: 9999px !important;
+}

@@ -1,0 +1,74 @@
+<main class="min-h-screen bg-slate-50 py-8 px-4">
+    <header class="max-w-5xl mx-auto mb-6">
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Reserva de Carpa</h1>
+        <p class="text-slate-600 text-sm mt-1">Selecciona el número de carpa y la fecha en el calendario Angular
+            Material.</p>
+    </header>
+
+    <form (ngSubmit)="submitBooking()"
+        class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg border border-slate-100 p-6 space-y-6">
+
+        <!-- Sección de Ubicación -->
+        <fieldset class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <legend class="px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Detalles de la Ubicación
+            </legend>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                <div>
+                    <label for="numberRow" class="block text-xs font-semibold text-slate-600 uppercase mb-1">Número de
+                        Fila</label>
+                    <input id="numberRow" type="number" min="1" [(ngModel)]="bookingData.numberRow" name="numberRow"
+                        class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 font-medium" />
+                </div>
+                <div>
+                    <label for="numberBeachTent"
+                        class="block text-xs font-semibold text-slate-600 uppercase mb-1">Número de Carpa</label>
+                    <input id="numberBeachTent" type="number" min="1" [(ngModel)]="bookingData.numberBeachTent"
+                        name="numberBeachTent"
+                        class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 font-medium" />
+                </div>
+                <div class="flex items-center pt-5">
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" [(ngModel)]="bookingData.payPartial" name="payPartial"
+                            class="sr-only peer" />
+                        <div
+                            class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                        </div>
+                        <span class="ml-3 text-sm font-semibold text-slate-700">Pago parcial</span>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Resumen del Rango de Fechas -->
+        <div
+            class="flex flex-wrap items-center justify-between gap-4 p-3 bg-blue-50 rounded-lg border border-blue-100 text-sm">
+            <div class="flex gap-4">
+                <span>Inicio: <strong class="text-blue-700">{{ bookingData.startDate || 'Sin seleccionar'
+                        }}</strong></span>
+                <span>Fin: <strong class="text-blue-700">{{ bookingData.endDate || 'Sin seleccionar' }}</strong></span>
+            </div>
+            <button type="submit" [disabled]="!bookingData.startDate || !bookingData.endDate"
+                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-semibold rounded-lg transition-all">
+                Confirmar Reserva
+            </button>
+        </div>
+
+    
+        <!-- Calendario de Angular Material embebido -->
+        <div class="flex justify-center p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <mat-calendar [selected]="selectedDate" [dateClass]="dateClass" (selectedChange)="onDateSelected($event)"
+                class="w-full max-w-md bg-white rounded-xl shadow-sm">
+            </mat-calendar>
+        </div>
+
+        
+        <!-- Total -->
+         <div class="flex justify-end items-center gap-2 p-4 rounded-xl">
+            <span class="text-sm font-medium uppercase tracking-wider text-slate-900">Total Estimado:</span>
+            <h2 class="text-3xl font-extrabold text-blue-600">
+                {{ total() | currency:'ARS':'symbol':'1.0-0' }}
+            </h2>
+        </div>
+
+    </form>
+</main>
