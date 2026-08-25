@@ -1,0 +1,129 @@
+<section class="max-w-4xl mx-auto my-8 p-6 md:p-10 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-900/5">
+  
+  <!-- Encabezado de la Sección -->
+  <header class="mb-8 border-b border-slate-100 pb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-black text-slate-900 tracking-tight">Distribución de Carpas</h1>
+      <p class="text-xs font-semibold text-slate-400 mt-1">Configura la cantidad de carpas y las características específicas de cada fila.</p>
+    </div>
+    <button 
+      type="button" 
+      (click)="addRow()"
+      class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-sky-50 text-sky-600 hover:bg-sky-100 font-extrabold text-xs rounded-xl transition-all cursor-pointer">
+      <ng-icon name="heroPlusSolid" class="text-sm"></ng-icon>
+       Agregar Fila
+    </button>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="nextStep()" class="flex flex-col gap-8">
+    
+    <!-- Contenedor del FormArray de Filas -->
+    <div formArrayName="rows" class="flex flex-col gap-4">
+      
+      <fieldset 
+        *ngFor="let rowGroup of rows.controls; let i = index" 
+        [formGroupName]="i" 
+        class="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col gap-4 relative m-0">
+        
+        <legend class="sr-only">Configuración de Fila {{ i + 1 }}</legend>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          
+          <!-- Identificador de la Fila -->
+          <span class="text-xs font-black uppercase tracking-wider text-slate-500 shrink-0">
+            Fila {{ i + 1 }}
+          </span>
+
+          <!-- Cantidad de Carpas en esta Fila -->
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <label [for]="'cap-' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700 shrink-0">
+              Carpas:
+            </label>
+            <input 
+              [id]="'cap-' + i"
+              type="number" 
+              min="1" 
+              formControlName="capacity"
+              class="w-20 px-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-bold text-center focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all"
+            />
+          </div>
+
+          <!-- Características / Atributos de la Fila -->
+          <div class="flex flex-col gap-1 w-full">
+            <label [for]="'feat-' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+              Características / Ubicación de la fila <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              [id]="'feat-' + i"
+              type="text" 
+              placeholder="Ej: Frente al mar, Cerca de los baños, Salida al pasillo principal" 
+              formControlName="features"
+              required
+              class="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all"
+            />
+          </div>
+
+          <!-- Botón Eliminar Fila -->
+          <button 
+            *ngIf="rows.length > 1"
+            type="button" 
+            (click)="removeRow(i)"
+            class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-2 rounded-lg transition-colors cursor-pointer self-end sm:self-center"
+            aria-label="Eliminar fila"
+            title="Eliminar fila">
+            <ng-icon name="heroTrashSolid" class="text-base flex items-center"></ng-icon>
+          </button>
+
+        </div>
+
+      </fieldset>
+
+    </div>
+
+    <!-- VISTA PREVIA DEL PLANO DE CARPAS DE TODO EL BALNEARIO -->
+    <div class="pt-4 border-t border-slate-200/60">
+      <div class="flex items-center justify-between mb-3 text-slate-500 text-xs font-bold uppercase tracking-wider">
+        <div class="flex items-center gap-2">
+          <ng-icon name="heroSquares2x2Solid" class="text-sm flex items-center"></ng-icon>
+          <span>Plano General de Carpas</span>
+        </div>
+        <span class="text-sky-600 font-extrabold text-xs">Total: {{ getTotalCarpas() }} Carpas</span>
+      </div>
+
+      <div class="overflow-x-auto p-4 bg-white rounded-2xl border border-slate-200/60 shadow-inner flex flex-col gap-3">
+        
+        <div 
+          *ngFor="let rowGroup of rows.controls; let rIndex = index" 
+          class="flex flex-col gap-1 pb-2 border-b border-slate-100 last:border-b-0 last:pb-0">
+          
+          <!-- Detalle de la Fila en la Previsualización -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-black text-slate-700 shrink-0">Fila {{ rIndex + 1 }}</span>
+            <span class="text-[11px] font-semibold text-slate-400 italic truncate">— {{ rowGroup.value.features || 'Sin característica definida' }}</span>
+          </div>
+
+          <!-- Grid/Visual de Carpas -->
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <div 
+              *ngFor="let c of getRange(rowGroup.value.capacity)" 
+              class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 text-sky-700 flex items-center justify-center text-[10px] font-black select-none cursor-default shrink-0 hover:bg-sky-100 transition-colors">
+              {{ rIndex + 1 }}-{{ c }}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botón Continuar -->
+    <button 
+      type="submit" 
+      [disabled]="form.invalid"
+      class="w-full py-3.5 px-6 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-lg shadow-sky-600/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+      <span>Guardar e ir a Servicios</span>
+      <ng-icon name="heroArrowRightSolid" class="text-base flex items-center"></ng-icon>
+    </button>
+
+  </form>
+</section>

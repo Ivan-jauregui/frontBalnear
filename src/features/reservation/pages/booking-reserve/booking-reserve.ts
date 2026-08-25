@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core'; // <-- 1. Importa ViewChild
+import { Component, computed, signal, ViewChild } from '@angular/core'; // <-- 1. Importa ViewChild
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -34,6 +34,7 @@ export class BookingReserve {
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
   total = signal<number>(0);
+  payPartial = signal<boolean>(false);
 
   selectedDate: Date | null = null;
   startDateObj = signal<Date | null>(null);
@@ -45,8 +46,34 @@ export class BookingReserve {
     numberBeachTent: 1,
     startDate: '',
     endDate: '',
-    payPartial: false
+    payPartial: this.payPartial()
   };
+
+  //Precio base de prueba
+  private readonly BASE_RATE = 100;
+
+  // Total a pagar
+  totalToPay = computed(() => {
+    const start = this.startDateObj();
+    const end = this.endDateObj();
+
+    // 1. Si no hay fechas, el total es 0
+    if (!start) return 0;
+
+    // 2. Si hay fecha de inicio pero no de fin, se cobra solo 1 día
+    if (start && !end) {
+      return this.payPartial() ? this.BASE_RATE * 0.5 : this.BASE_RATE;
+    }
+
+    // 3. Si están ambas fechas, calculamos los días de diferencia
+    const diffTime = Math.abs(end!.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    const fullTotal = this.BASE_RATE * diffDays;
+
+    // 4. Aplicamos el descuento del 50% si payPartial es true
+    return this.payPartial() ? fullTotal * 0.5 : fullTotal;
+  });
+
 
   private formatDateLocal(date: Date): string {
     const year = date.getFullYear();
@@ -67,7 +94,7 @@ export class BookingReserve {
       this.bookingData.endDate = '';
     } else if (this.bookingData.startDate && !this.bookingData.endDate) {
       const start = this.startDateObj();
-      
+
       if (start && date < start) {
         this.startDateObj.set(date);
         this.bookingData.startDate = formattedDate;
@@ -77,9 +104,7 @@ export class BookingReserve {
       }
     }
 
-    this.calculateTotal();
 
-    // 3. ¡ESTA LÍNEA ES LA CLAVE! Fuerza a Material a volver a ejecutar dateClass y repintar
     if (this.calendar) {
       this.calendar.updateTodaysDate();
     }
@@ -100,30 +125,6 @@ export class BookingReserve {
     }
     return '';
   };
-
-  calculateTotal(): number {
-    const baseRate = 100;
-    const start = this.startDateObj();
-    const end = this.endDateObj();
-
-    if (start && !end) {
-      this.total.set(baseRate);
-      return baseRate;
-    }
-
-    if (!start || !end) {
-      this.total.set(0);
-      return 0;
-    }
-
-    const diffTime = Math.abs(end.getTime() - start.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-    const calculatedTotal = baseRate * diffDays;
-    this.total.set(calculatedTotal);
-    
-    return calculatedTotal;
-  }
 
   submitBooking(): void {
     window.alert('Payload listo para enviar: ' + JSON.stringify(this.bookingData, null, 2));

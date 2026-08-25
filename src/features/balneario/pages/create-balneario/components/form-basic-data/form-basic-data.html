@@ -1,0 +1,60 @@
+<form [formGroup]="form" (ngSubmit)="nextStep()" class="flex flex-col gap-6">
+
+    <!-- Agrupación semántica para el motor de búsqueda -->
+    <fieldset class="flex flex-col gap-6 border-0 p-0 m-0">
+        <legend class="sr-only">Información General del Balneario</legend>
+
+        <!-- FILA 1: Nombre del Balneario -->
+        <div class="flex flex-col gap-2">
+            <label for="name" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                Nombre del Balneario <span class="text-rose-500" aria-hidden="true">*</span>
+            </label>
+            <input id="name" type="text" placeholder="Ej: Balneario La Serena" formControlName="name" required
+                aria-required="true"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+        </div>
+
+        <!-- FILA 2: Descripción -->
+        <div class="flex flex-col gap-2">
+            <label for="description" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                Descripción
+            </label>
+            <textarea id="description" rows="3" placeholder="Escribe una breve descripción sobre las comodidades..."
+                formControlName="description"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200 resize-none">
+        </textarea>
+        </div>
+
+        <!-- FILA 3: Dirección -->
+        <div class="flex flex-col gap-2">
+            <label for="address" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                Dirección
+            </label>
+            <input id="address" type="text" placeholder="Ej: Paseo Victoria Ocampo 100" formControlName="address"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+        </div>
+
+        <!-- FILA 4: Zona -->
+        <div class="flex flex-col gap-2">
+            <label for="zone" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                Zona
+            </label>
+            <select id="zone" formControlName="zone"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200">
+                <option value="" disabled selected>Selecciona una zona</option>
+                <option value="Playa Grande">Playa Grande</option>
+                <option value="Centro / La Perla">Centro / La Perla</option>
+                <option value="Punta Mogotes">Punta Mogotes</option>
+                <option value="Zona Sur">Zona Sur</option>
+            </select>
+        </div>
+    </fieldset>
+
+    <div class="flex justify-end">
+
+        <button type="submit"
+            class="w-10 h-10 flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white rounded-xl shadow-lg shadow-sky-600/20 transition-all duration-200">
+            <ng-icon class="text-2xl stroke-[10]" name="heroArrowRightSolid" style="font-size: 24px;" />
+        </button>
+    </div>
+</form>

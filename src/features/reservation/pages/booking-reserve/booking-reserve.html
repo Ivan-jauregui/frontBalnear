@@ -1,8 +1,7 @@
 <main class="min-h-screen bg-slate-50 py-8 px-4">
     <header class="max-w-5xl mx-auto mb-6">
         <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Reserva de Carpa</h1>
-        <p class="text-slate-600 text-sm mt-1">Selecciona el número de carpa y la fecha en el calendario Angular
-            Material.</p>
+        <p class="text-slate-600 text-sm mt-1">Selecciona el número de carpa y la fecha en el calendario </p>
     </header>
 
     <form (ngSubmit)="submitBooking()"
@@ -28,8 +27,8 @@
                 </div>
                 <div class="flex items-center pt-5">
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" [(ngModel)]="bookingData.payPartial" name="payPartial"
-                            class="sr-only peer" />
+                        <input type="checkbox" [(ngModel)]="bookingData.payPartial" #value
+                            (ngModelChange)="payPartial.set($event)" name="payPartial" class="sr-only peer" />
                         <div
                             class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                         </div>
@@ -53,7 +52,7 @@
             </button>
         </div>
 
-    
+
         <!-- Calendario de Angular Material embebido -->
         <div class="flex justify-center p-4 bg-slate-50 rounded-xl border border-slate-200">
             <mat-calendar [selected]="selectedDate" [dateClass]="dateClass" (selectedChange)="onDateSelected($event)"
@@ -61,13 +60,23 @@
             </mat-calendar>
         </div>
 
-        
+
         <!-- Total -->
-         <div class="flex justify-end items-center gap-2 p-4 rounded-xl">
-            <span class="text-sm font-medium uppercase tracking-wider text-slate-900">Total Estimado:</span>
-            <h2 class="text-3xl font-extrabold text-blue-600">
-                {{ total() | currency:'ARS':'symbol':'1.0-0' }}
-            </h2>
+        <div class="flex flex-col items-end gap-2 p-4 rounded-xl">
+            <!-- Fila del Total -->
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-medium uppercase tracking-wider text-slate-900">Total Estimado:</span>
+                <h2 class="text-3xl font-extrabold text-blue-600">
+                    {{ totalToPay() | currency:'ARS':'symbol':'1.0-0' }}
+                </h2>
+            </div>
+
+            <!-- Fila Advertencia  -->
+            @if(payPartial()){
+            <span class="text-xs font-light uppercase tracking-wider text-slate-400 text-right max-w-md">
+                Si pagas parcialmente, el resto se abonará presencialmente el día que inicie su reserva.
+            </span>
+            }
         </div>
 
     </form>
