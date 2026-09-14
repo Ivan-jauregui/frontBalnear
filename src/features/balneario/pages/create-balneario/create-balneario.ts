@@ -26,7 +26,7 @@ import { InfrastructureData } from './steps/infrastructure-data/infrastructure-d
 export class CreateBalneario {
   form!: FormGroup;
   step = signal<number>(1);
-  balnearioFinal = signal<Partial<BalnearioRequest>>({});
+  balneario = signal<Partial<BalnearioRequest>>({});
 
   private amenityService = inject(AmenityService)
   private balnearioService = inject(BalnearioService)
@@ -72,15 +72,15 @@ export class CreateBalneario {
 
   nextStep(){
     if(this.step()===1 && this.basicData.valid){ 
-      this.balnearioFinal.update(b =>({...b,...this.basicData.value()}));
+      this.balneario.update(b =>({...b,...this.basicData.value()}));
       this.step.set(2)
     }
     else if(this.step()===2 && this.commercialData.valid){
-      this.balnearioFinal.update(b=>({...b,...this.commercialData.value()}))
+      this.balneario.update(b=>({...b,...this.commercialData.value()}))
       this.step.set(3)
     }
     else if(this.step()===3 && this.commercialData.valid){
-      this.balnearioFinal.update(b=>({...b,...this.infraestucureData.value()}))
+      this.balneario.update(b=>({...b,...this.infrastructureData.value()}))
       this.step.set(4)
     };
   }
@@ -121,23 +121,12 @@ export class CreateBalneario {
 
    save(): void {
       if (this.form.valid) {
-        this.belenearioFinal.update(p =>({...p,...this.direccion.value}));
+        this.balneario.update(b =>({...b,amenities: Array.from(this.selected())}));
+  
+        const payload = this.balneario() as BalnearioRequest;
 
-        const formValue = this.form.value;
-  
-        console.log("hla")
-  
-        const balneario: BalnearioRequest = {
-          name: formValue.name,
-          description: formValue.description,
-          address: formValue.address,
-          price: formValue.price,
-          zone: formValue.zone,
-          ownerId: formValue.ownerId,
-          amenities: Array.from(this.selected())
-        }
-  
-        this.balnearioService.save(balneario).subscribe({
+
+        this.balnearioService.save(payload).subscribe({
           next: (response: any) => {
             console.log(response)
             this.router.navigate([`/balneario/${response.id}/imagen`] );
