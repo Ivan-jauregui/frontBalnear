@@ -28,7 +28,7 @@ export const routes: Routes = [
     { path: 'balneario/search/:id', component: BalnearioDetail },
 
     // Creación de Balnearios
-    { path: 'balneario/create', component: CreateBalneario, canActivate: [authGuard] },
+    { path: 'balneario/create', component: CreateBalneario,  },
 
     //Steps
     { path: 'balneario/create/basic-data', component: BasicData },
