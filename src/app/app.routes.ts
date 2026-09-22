@@ -17,8 +17,6 @@ import { Register } from '../features/auth/pages/register/register';
 
 
 import { authGuard } from './core/guards/auth-guard'; 
-import { BasicData } from '../features/balneario/pages/create-balneario/steps/basic-data/basic-data';
-import { InfrastructureData } from '../features/balneario/pages/create-balneario/steps/infrastructure-data/infrastructure-data';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -30,9 +28,6 @@ export const routes: Routes = [
     // Creación de Balnearios
     { path: 'balneario/create', component: CreateBalneario,  },
 
-    //Steps
-    { path: 'balneario/create/basic-data', component: BasicData },
-    { path: 'balneario/create/infrastructure-data', component: InfrastructureData },
 
     { path: 'balneario/:id/imagen', component: UploadImage, canActivate: [authGuard] },
 
