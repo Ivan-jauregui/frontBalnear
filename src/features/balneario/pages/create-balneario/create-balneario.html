@@ -1,5 +1,6 @@
-<div class="max-w-3xl mx-auto my-8 p-6 md:p-10 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-900/5">
-  
+<div
+  class="max-w-3xl mx-auto my-8 p-6 md:p-10 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-900/5">
+
   <!-- Cabecera del Formulario -->
   <div class="mb-8 border-b border-slate-100 pb-5">
     <h2 class="text-2xl font-black text-slate-900 tracking-tight">Registrar Nuevo Balneario</h2>
@@ -10,309 +11,273 @@
 
     <!-- ================= PASO 1: DATOS BÁSICOS ================= -->
     @if (step() === 1) {
-      <div formGroupName="basicData" class="flex flex-col gap-6">
-        
-        <!-- Nombre del Balneario -->
-        <div class="flex flex-col gap-2">
-          <label for="name" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-            Nombre del Balneario <span class="text-rose-500">*</span>
-          </label>
-          <input 
-            id="name"
-            type="text" 
-            placeholder="Ej: Balneario La Serena" 
-            formControlName="name"
-            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-          />
-        </div>
+    <div class="flex flex-col gap-6">
 
-        <!-- Descripción -->
-        <div class="flex flex-col gap-2">
-          <label for="description" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-            Descripción <span class="text-rose-500">*</span>
-          </label>
-          <textarea 
-            id="description"
-            rows="3"
-            placeholder="Escribe una breve descripción sobre las comodidades..." 
-            formControlName="description"
-            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200 resize-none">
+      <!-- Nombre del Balneario -->
+      <div class="flex flex-col gap-2">
+        <label for="name" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Nombre del Balneario <span class="text-rose-500">*</span>
+        </label>
+        <input id="name" type="text" placeholder="Ej: Balneario La Serena" formControlName="name"
+          class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+
+      <!-- Descripción -->
+      <div class="flex flex-col gap-2">
+        <label for="description" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Descripción <span class="text-rose-500">*</span>
+        </label>
+        <textarea id="description" rows="3" placeholder="Escribe una breve descripción sobre las comodidades..."
+          formControlName="description"
+          class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200 resize-none">
           </textarea>
-        </div>
+      </div>
 
-        <!-- Dirección -->
+      <!-- Dirección -->
+      <div class="flex flex-col gap-2">
+        <label for="address" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Dirección <span class="text-rose-500">*</span>
+        </label>
+        <input id="address" type="text" placeholder="Ej: Paseo Victoria Ocampo 100" formControlName="address"
+          class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+
+      <!-- Zona y Dueño -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="flex flex-col gap-2">
-          <label for="address" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-            Dirección <span class="text-rose-500">*</span>
+          <label for="zone" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+            Zona <span class="text-rose-500">*</span>
           </label>
-          <input 
-            id="address"
-            type="text" 
-            placeholder="Ej: Paseo Victoria Ocampo 100" 
-            formControlName="address"
-            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-          />
+          <select id="zone" formControlName="zone"
+            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200">
+            <option value="" disabled selected>Selecciona una zona</option>
+            <option value="Playa Grande">Playa Grande</option>
+            <option value="Centro / La Perla">Centro / La Perla</option>
+            <option value="Punta Mogotes">Punta Mogotes</option>
+            <option value="Zona Sur">Zona Sur</option>
+          </select>
         </div>
 
-        <!-- Zona y Dueño -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="flex flex-col gap-2">
-            <label for="zone" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Zona <span class="text-rose-500">*</span>
-            </label>
-            <select 
-              id="zone"
-              formControlName="zone"
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-            >
-              <option value="" disabled selected>Selecciona una zona</option>
-              <option value="Playa Grande">Playa Grande</option>
-              <option value="Centro / La Perla">Centro / La Perla</option>
-              <option value="Punta Mogotes">Punta Mogotes</option>
-              <option value="Zona Sur">Zona Sur</option>
-            </select>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <label for="ownerId" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              ID del Propietario <span class="text-rose-500">*</span>
-            </label>
-            <input 
-              id="ownerId"
-              type="number" 
-              placeholder="Ej: 102" 
-              formControlName="ownerId"
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-            />
-          </div>
+        <div class="flex flex-col gap-2">
+          <label for="ownerId" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+            ID del Propietario <span class="text-rose-500">*</span>
+          </label>
+          <input id="ownerId" type="number" placeholder="Ej: 102" formControlName="ownerId"
+            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
         </div>
       </div>
 
-      <!-- BOTÓN SIGUIENTE -->
-      <div class="mt-4 pt-4 border-t border-slate-100 flex justify-end">
-        <button 
-          type="button" 
-          (click)="nextStep()"
-          [disabled]="basicData.invalid"
-          class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
-          Siguiente
-        </button>
+      <!-- Fecha Inicio y Fin de temporada -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex flex-col gap-2">
+          <label for="startDateId" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+            Fecha Inicio temporada <span class="text-rose-500">*</span>
+          </label>
+          <input id="startDateId" type="date" placeholder="Ingresa fecha de inicio..." formControlName="startDate"
+            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="endDateId" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+            Fecha Fin temporada <span class="text-rose-500">*</span>
+          </label>
+          <input id="endDateId" type="date" placeholder="Ingresa fecha de inicio..." formControlName="endDate"
+            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+        </div>
       </div>
+    </div>
+
+    <!-- BOTÓN SIGUIENTE -->
+    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-end">
+      <button type="button" (click)="nextStep()" [disabled]="!isBasicDataValid"
+        class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
+        Siguiente
+      </button>
+    </div>
     }
 
     <!-- ================= PASO 2: DATOS COMERCIALES ================= -->
     @if (step() === 2) {
-      <div formGroupName="commercialData" class="flex flex-col gap-6">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Precio Base -->
-          <div class="flex flex-col gap-2">
-            <label for="basePrice" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Precio Base ($) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
-              <input 
-                id="basePrice"
-                type="number" 
-                placeholder="0.00" 
-                formControlName="basePrice"
-                class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-              />
-            </div>
-          </div>
+    <div formGroupName="rates" class="flex flex-col gap-6">
 
-          <!-- Precio de Temporada -->
-          <div class="flex flex-col gap-2">
-            <label for="seasonalPrice" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Precio Temporada ($) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
-              <input 
-                id="seasonalPrice"
-                type="number" 
-                placeholder="0.00" 
-                formControlName="seasonalPrice"
-                class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-              />
-            </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Precio Base -->
+        <div class="flex flex-col gap-2">
+          <label for="basePrice" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+            Precio Base ($) <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
+            <input id="basePrice" type="number" placeholder="0.00" formControlName="basePrice"
+              class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
           </div>
         </div>
 
+        <!-- Precio de Temporada -->
+        <div class="flex flex-col gap-2">
+          <label for="seasonalPrice" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+            Precio Temporada ($) <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
+            <input id="seasonalPrice" type="number" placeholder="0.00" formControlName="seasonalPrice"
+              class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+          </div>
+        </div>
       </div>
 
-      <!-- BOTONES NAVEGACIÓN -->
-      <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
-        <button 
-          type="button" 
-          (click)="previousStep()"
-          class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
-          Anterior
-        </button>
-        <button 
-          type="button" 
-          (click)="nextStep()"
-          [disabled]="commercialData.invalid"
-          class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
-          Siguiente
-        </button>
-      </div>
+    </div>
+
+    <!-- BOTONES NAVEGACIÓN -->
+    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
+      <button type="button" (click)="previousStep()"
+        class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
+        Anterior
+      </button>
+      <button type="button" (click)="nextStep()" [disabled]="!isRatesDataValid"
+        class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
+        Siguiente
+      </button>
+    </div>
     }
 
     <!-- ================= PASO 3: INFRAESTRUCTURA ================= -->
-    @if (step() === 3) {
-      <div formGroupName="infrastructureData" class="flex flex-col gap-6">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Número -->
-          <div class="flex flex-col gap-2">
-            <label for="number" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Número del Balneario <span class="text-rose-500">*</span>
-            </label>
-            <input 
-              id="number"
-              type="text" 
-              placeholder="Ej: B-12" 
-              formControlName="number"
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-            />
-          </div>
+@if (step() === 3) {
+<div formArrayName="rows" class="flex flex-col gap-6">
 
-          <!-- Tag -->
-          <div class="flex flex-col gap-2">
-            <label for="tag" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Etiqueta (Tag) <span class="text-rose-500">*</span>
-            </label>
-            <input 
-              id="tag"
-              type="text" 
-              placeholder="Ej: Familiar" 
-              formControlName="tag"
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-            />
-          </div>
+  <!-- Bucle para cada fila de carpas -->
+  <div *ngFor="let fila of rowsArray.controls; let i = index" [formGroupName]="i"
+    class="p-6 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-6 shadow-sm">
 
-          <!-- Primer Carpa -->
-          <div class="flex flex-col gap-2">
-            <label for="firstBeachTent" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Primera Carpa <span class="text-rose-500">*</span>
-            </label>
-            <input 
-              id="firstBeachTent"
-              type="number" 
-              placeholder="1" 
-              formControlName="firstBeachTent"
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-            />
-          </div>
+    <div class="flex justify-between items-center border-b border-slate-200/60 pb-3">
+      <span class="text-xs font-black uppercase tracking-wider text-slate-800">
+        Configuración Fila #{{ i + 1 }}
+      </span>
+      <!-- Botón para quitar la fila -->
+      <button *ngIf="rowsArray.length > 1" type="button" (click)="eliminarFila(i)"
+        class="text-xs text-rose-500 font-bold hover:text-rose-600 hover:underline transition-colors">
+        Eliminar Fila
+      </button>
+    </div>
 
-          <!-- Última Carpa -->
-          <div class="flex flex-col gap-2">
-            <label for="lastBeachTent" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-              Última Carpa <span class="text-rose-500">*</span>
-            </label>
-            <input 
-              id="lastBeachTent"
-              type="number" 
-              placeholder="100" 
-              formControlName="lastBeachTent"
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200"
-            />
-          </div>
-        </div>
-
+    <!-- Grid Primera y Última Carpa -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Primera Carpa -->
+      <div class="flex flex-col gap-2">
+        <label [for]="'firstTent_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Primera Carpa <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'firstTent_' + i" type="number" formControlName="firstBeachTent" placeholder="Ej: 1"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
       </div>
 
-      <!-- BOTONES NAVEGACIÓN -->
-      <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
-        <button 
-          type="button" 
-          (click)="previousStep()"
-          class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
-          Anterior
-        </button>
-        <button 
-          type="button" 
-          (click)="nextStep()"
-          [disabled]="infrastructureData.invalid"
-          class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
-          Siguiente
-        </button>
+      <!-- Última Carpa -->
+      <div class="flex flex-col gap-2">
+        <label [for]="'lastTent_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Última Carpa <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'lastTent_' + i" type="number" formControlName="lastBeachTent" placeholder="Ej: 20"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
       </div>
+    </div>
+
+    <!-- Etiqueta / Tag -->
+    <div class="flex flex-col gap-2">
+      <label [for]="'tag_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+        Etiqueta de Ubicación / Tag
+      </label>
+      <input [id]="'tag_' + i" type="text" formControlName="tag" placeholder="Ej: Primera línea al mar"
+        class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+    </div>
+
+  </div>
+
+  <!-- Botón para agregar nueva fila -->
+  <button type="button" (click)="agregarFila()"
+    class="w-full border-2 border-dashed border-slate-300 hover:border-sky-500 bg-slate-50/50 hover:bg-sky-50/30 p-4 rounded-2xl text-slate-600 hover:text-sky-600 font-extrabold text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.99]">
+    + Añadir otra fila de carpas
+  </button>
+</div>
+
+    <!-- BOTONES NAVEGACIÓN -->
+    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
+      <button type="button" (click)="previousStep()"
+        class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
+        Anterior
+      </button>
+      <button type="button" (click)="nextStep()" [disabled]="!isRowsValid"
+        class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
+        Siguiente
+      </button>
+    </div>
     }
 
     <!-- ================= PASO 4: SERVICIOS / AMENITIES ================= -->
     @if (step() === 4) {
-      <div class="flex flex-col gap-3">
-        <div class="flex items-center justify-between">
-          <label class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-            Servicios Incluidos
-          </label>
-          <span class="text-[11px] font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full">
-            {{ selected().size }} seleccionados
-          </span>
-        </div>
+    <div class="flex flex-col gap-3">
+      <div class="flex items-center justify-between">
+        <label class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Servicios Incluidos
+        </label>
+        <span class="text-[11px] font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full">
+          {{ selected().size }} seleccionados
+        </span>
+      </div>
 
-        <!-- Estado: Cargando -->
-        @if (isLoading()) {
-          <div class="flex items-center justify-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200 text-xs font-bold text-slate-400 animate-pulse gap-2">
-            <ng-icon name="heroSparkles" class="text-sky-500 text-base"></ng-icon>
-            Cargando catálogo de servicios...
-          </div>
-        } 
-        <!-- Estado: Error -->
-        @else if (errorMessage()) {
-          <div class="p-4 bg-rose-50 border border-rose-100 rounded-2xl text-xs font-bold text-rose-600 flex items-center gap-2">
-            <ng-icon name="heroExclamationTriangle" class="text-base"></ng-icon>
-            {{ errorMessage() }}
-          </div>
-        } 
-        <!-- Estado: Lista de Servicios -->
-        @else {
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-            @for (servicio of servicios(); track servicio.id) {
-              <button 
-                type="button" 
-                (click)="toggleSeleccion(servicio.id)"
-                [class]="selected().has(servicio.id)
+      <!-- Estado: Cargando -->
+      @if (isLoading()) {
+      <div
+        class="flex items-center justify-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200 text-xs font-bold text-slate-400 animate-pulse gap-2">
+        <ng-icon name="heroSparkles" class="text-sky-500 text-base"></ng-icon>
+        Cargando catálogo de servicios...
+      </div>
+      }
+      <!-- Estado: Error -->
+      @else if (errorMessage()) {
+      <div
+        class="p-4 bg-rose-50 border border-rose-100 rounded-2xl text-xs font-bold text-rose-600 flex items-center gap-2">
+        <ng-icon name="heroExclamationTriangle" class="text-base"></ng-icon>
+        {{ errorMessage() }}
+      </div>
+      }
+      <!-- Estado: Lista de Servicios -->
+      @else {
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+        @for (servicio of servicios(); track servicio.id) {
+        <button type="button" (click)="toggleSeleccion(servicio.id)" [class]="selected().has(servicio.id)
                   ? 'border-sky-600 bg-sky-50/80 text-sky-950 font-bold shadow-sm shadow-sky-500/10'
                   : 'border-slate-200 bg-white text-slate-600 font-medium hover:border-slate-300 hover:bg-slate-50'"
-                class="flex items-center justify-between p-3 border rounded-xl text-xs transition-all duration-200 active:scale-95 text-left">
-                
-                <span class="truncate">{{ servicio.name }}</span>
+          class="flex items-center justify-between p-3 border rounded-xl text-xs transition-all duration-200 active:scale-95 text-left">
 
-                <!-- Badge / Check visual al seleccionar -->
-                <span 
-                  [class]="selected().has(servicio.id) ? 'bg-sky-600 text-white' : 'border border-slate-300 bg-white'"
-                  class="w-4 h-4 rounded-full flex items-center justify-center text-[10px] transition-colors shrink-0">
-                  @if (selected().has(servicio.id)) { ✓ }
-                </span>
-              </button>
-            } @empty {
-              <p class="col-span-full p-4 text-center text-xs italic text-slate-400 bg-slate-50 rounded-2xl border border-slate-100">
-                No hay servicios o amenities disponibles para seleccionar.
-              </p>
-            }
-          </div>
+          <span class="truncate">{{ servicio.name }}</span>
+
+          <!-- Badge / Check visual al seleccionar -->
+          <span [class]="selected().has(servicio.id) ? 'bg-sky-600 text-white' : 'border border-slate-300 bg-white'"
+            class="w-4 h-4 rounded-full flex items-center justify-center text-[10px] transition-colors shrink-0">
+            @if (selected().has(servicio.id)) { ✓ }
+          </span>
+        </button>
+        } @empty {
+        <p
+          class="col-span-full p-4 text-center text-xs italic text-slate-400 bg-slate-50 rounded-2xl border border-slate-100">
+          No hay servicios o amenities disponibles para seleccionar.
+        </p>
         }
       </div>
+      }
+    </div>
 
-      <!-- BOTÓN DE GUARDAR Y ANTERIOR -->
-      <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
-        <button 
-          type="button" 
-          (click)="previousStep()"
-          class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
-          Anterior
-        </button>
-        <button 
-          type="submit" 
-          [disabled]="form.invalid"
-          class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
-          Crear Balneario
-        </button>
-      </div>
+    <!-- BOTÓN DE GUARDAR Y ANTERIOR -->
+    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
+      <button type="button" (click)="previousStep()"
+        class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
+        Anterior
+      </button>
+      <button type="submit" [disabled]="form.invalid"
+        class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
+        Crear Balneario
+      </button>
+    </div>
     }
 
   </form>
