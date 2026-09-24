@@ -23,12 +23,11 @@ export const routes: Routes = [
 
     // Lista de Balnearios y búsqueda
     { path: 'balnearios', component: BalnearioList },
-    { path: 'balneario/search/:id', component: BalnearioDetail },
 
     // Creación de Balnearios
     { path: 'balneario/create', component: CreateBalneario,  },
 
-
+    { path: 'balneario/:id', component: BalnearioDetail },
     { path: 'balneario/:id/imagen', component: UploadImage, canActivate: [authGuard] },
 
     {path: 'reserve',component: BookingReserve},

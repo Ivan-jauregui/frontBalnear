@@ -1,136 +1,134 @@
-<!-- CONTENEDOR PRINCIPAL -->
-<div class="min-h-screen bg-slate-50 p-4 md:p-8">
-  <div class="max-w-7xl mx-auto">
-
-    <!-- BOTÓN VOLVER (UX: Navegación clara) -->
-    <div class="mb-6">
-      <a routerLink="/balnearios" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-sky-600 transition-colors group p-2 rounded-xl hover:bg-sky-50">
-        <ng-icon name="heroArrowLeft" class="text-base transition-transform group-hover:-translate-x-1"></ng-icon>
-        Volver al listado
-      </a>
+<!-- ESTADO 1: Cargando Balneario -->
+@if (isBalnearioLoading()) {
+  <div class="flex justify-center items-center min-h-[50vh]">
+    <div class="flex flex-col items-center gap-3">
+      <div class="w-10 h-10 border-4 border-sky-200 border-t-sky-600 rounded-full animate-spin"></div>
+      <p class="text-slate-500 font-medium">Cargando balneario...</p>
     </div>
-
-    <!-- ========================================== -->
-    <!-- ESTADO: CARGANDO (Skeleton Loader Pro)     -->
-    <!-- ========================================== -->
-    @if (isLoading()) {
-      <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden animate-pulse">
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <!-- Skeleton Imagen -->
-          <div class="aspect-[4/3] md:aspect-auto bg-slate-200"></div>
-          <!-- Skeleton Info -->
-          <div class="p-8 md:p-12 flex flex-col gap-6">
-            <div class="h-4 bg-slate-200 rounded-full w-1/4"></div>
-            <div class="h-10 bg-slate-200 rounded-full w-3/4"></div>
-            <div class="h-20 bg-slate-200 rounded-2xl w-full"></div>
-            <div class="flex gap-3">
-              <div class="w-10 h-10 bg-slate-200 rounded-full"></div>
-              <div class="w-10 h-10 bg-slate-200 rounded-full"></div>
-            </div>
-            <div class="mt-auto h-16 bg-slate-200 rounded-2xl w-full"></div>
-          </div>
-        </div>
-      </div>
-    }
-
-    <!-- ========================================== -->
-    <!-- ESTADO: ERROR                              -->
-    <!-- ========================================== -->
-    @else if (errorMessage()) {
-      <div class="max-w-xl mx-auto my-16 p-8 bg-white rounded-3xl shadow-lg border border-rose-100 text-center">
-        <div class="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-6">
-          <ng-icon name="heroExclamationTriangle" class="text-3xl"></ng-icon>
-        </div>
-        <h3 class="text-xl font-black text-slate-900 mb-2">No pudimos cargar los detalles</h3>
-        <p class="text-slate-500 text-sm mb-6">{{ errorMessage() }}</p>
-        <a routerLink="/balnearios" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition-all">
-          Volver a intentar
-        </a>
-      </div>
-    }
-
-    <!-- ========================================== -->
-    <!-- ESTADO: DATOS CARGADOS (UI Aspiracional)   -->
-    <!-- ========================================== -->
-    @else if (balneario(); as b) {
-      <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/5">
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          
-          <!-- COLUMNA IZQ: IMAGEN HÉROE -->
-          <div class="relative aspect-[4/3] md:aspect-auto overflow-hidden bg-slate-100 group">
-            <img 
-              [src]="b.imageUrl || 'assets/placeholder-balneario.jpg'" 
-              [alt]="b.name"
-              class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
-            />
-            <!-- Badge flotante (opcional si tenés info de ranking/estrellas) -->
-            <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md flex items-center gap-2">
-              <ng-icon name="heroSparkles" class="text-amber-500 text-sm"></ng-icon>
-              <span class="text-xs font-black text-slate-900 uppercase tracking-wider">Recomendado</span>
-            </div>
-          </div>
-
-          <!-- COLUMNA DER: INFORMACIÓN Y ACCIONES -->
-          <div class="p-8 md:p-12 lg:p-16 flex flex-col">
-            
-            <!-- Ubicación y Zona -->
-            <div class="flex items-center gap-2 text-sky-600 mb-3">
-              <ng-icon name="heroMapPin" class="text-lg"></ng-icon>
-              <span class="text-sm font-bold uppercase tracking-widest">{{ b.zone }} — Mar del Plata</span>
-            </div>
-
-            <!-- Nombre Grande -->
-            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-tight mb-6">
-              {{ b.name }}
-            </h1>
-
-            <!-- Descripción (UX: Texto legible)
-            <div class="prose prose-slate prose-sm max-w-none text-slate-600 mb-10 leading-relaxed">
-              <p>{{ b.description || 'Disfrutá de un verano inolvidable en nuestras instalaciones equipadas para toda la familia frente al mar argentino.' }}</p>
-            </div>
-
-            Servicios Destacados (Iconos Profesionales)
-            <div class="mb-12">
-              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Servicios incluidos</h4>
-              <div class="flex flex-wrap gap-3">
-            
-                <span *ngIf="b.hasPool" class="inline-flex items-center gap-2.5 bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl border border-slate-100 text-sm font-medium" title="Pileta climatizada">
-                  <ng-icon name="heroSun" class="text-lg text-sky-500"></ng-icon>
-                  Pileta
-                </span>
-
-                <span *ngIf="b.isPetFriendly" class="inline-flex items-center gap-2.5 bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl border border-slate-100 text-sm font-medium" title="Aceptamos mascotas">
-                  <ng-icon name="heroHeart" class="text-lg text-amber-500"></ng-icon>
-                  Pet Friendly
-                </span>
-           
-                <span *ngIf="b.hasParking" class="inline-flex items-center gap-2.5 bg-slate-50 text-slate-700 px-4 py-2.5 rounded-xl border border-slate-100 text-sm font-medium" title="Estacionamiento cubierto">
-                  <ng-icon name="heroKey" class="text-lg text-indigo-500"></ng-icon>
-                  Cochera
-                </span>
-              </div>
-            </div> -->
-
-            <!-- FOOTER: PRECIO Y CTA (Fijado abajo en desktop) -->
-            <div class="mt-auto pt-8 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-slate-50 md:bg-white -mx-8 -mb-8 md:m-0 p-8 md:p-0 md:pt-8 rounded-b-3xl md:rounded-none">
-              <div class="flex flex-col">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Precio por día (desde)</span>
-                <span class="text-3xl font-black text-slate-900">
-                  {{ b.price | currency:'ARS':'symbol':'1.0-0' }}
-                </span>
-                <span class="text-xs text-emerald-600 font-semibold mt-1">Sujeto a disponibilidad</span>
-              </div>
-              
-              <!-- Botón de Acción Principal -->
-              <button class="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-black text-sm px-10 py-4 rounded-2xl shadow-lg shadow-sky-500/20 transition-all duration-300 transform hover:-translate-y-1 active:scale-95 active:translate-y-0 flex items-center justify-center gap-2">
-                Reservar Carpa
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    }
-    
   </div>
-</div>
+} 
+
+<!-- ESTADO 2: Error -->
+@else if (errorMessage()) {
+  <div class="max-w-3xl mx-auto mt-10 bg-red-50 text-red-600 p-6 rounded-2xl text-center border border-red-200 flex flex-col items-center gap-2">
+    <ng-icon name="heroExclamationTriangle" class="text-4xl"></ng-icon>
+    <p class="font-semibold text-lg">{{ errorMessage() }}</p>
+    <a routerLink="/" class="mt-4 text-sm font-bold text-red-700 hover:underline">Volver al inicio</a>
+  </div>
+} 
+
+<!-- ESTADO 3: Datos cargados correctamente -->
+@else if (balneario(); as resort) {
+  
+  <!-- ========================================== -->
+  <!-- BANNER (Ocupa todo el ancho de la pantalla)-->
+  <!-- ========================================== -->
+  <div class="w-full h-56 md:h-80 bg-slate-300">
+      <!-- El botón volver lo ponemos dentro del banner pero alineado con el texto -->
+      <div class="max-w-7xl  px-4 sm:px-6 lg:px-8 pt-6">
+          <a routerLink="/" class="inline-flex items-center gap-2 text-slate-700 bg-white/70 hover:bg-white backdrop-blur-md px-4 py-2 rounded-full font-medium transition-colors shadow-sm">
+            <ng-icon name="heroArrowLeft"></ng-icon>
+            Volver
+          </a>
+      </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- INFO DEL BALNEARIO (Sin formato de Card)   -->
+  <!-- ========================================== -->
+  <!-- Usamos margen negativo (-mt-16 / -mt-24) para subir el contenido sobre el banner -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative mb-12 -mt-16 md:-mt-24">
+      
+      <!-- Fila de Foto + Botón -->
+      <div class="flex justify-between items-end">
+          <!-- Foto superpuesta -->
+          <img 
+              [src]="resort.imageUrl" 
+              [alt]="resort.name"
+              class="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white shadow-md object-cover bg-white"
+          >
+          
+          <!-- Botón de reserva (Alineado a la derecha) -->
+          <button class="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2.5 md:px-8 md:py-3 rounded-full font-bold transition-colors shadow-md text-sm md:text-base mb-2 md:mb-4">
+              Reservar Carpa
+          </button>
+      </div>
+
+      <!-- Textos principales -->
+      <div class="mt-6 md:mt-8">
+          <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight">
+              {{ resort.name }}
+          </h1>
+          
+          <div class="flex flex-wrap items-center gap-4 md:gap-6 mt-4 text-sm md:text-base text-slate-600 font-medium">
+              <div class="flex items-center gap-1.5">
+                  <ng-icon name="heroMapPin" class="text-sky-500 text-xl"></ng-icon>
+                  <span>{{ resort.address || 'Mar del Plata' }}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                  <ng-icon name="heroSun" class="text-amber-500 text-xl"></ng-icon>
+                  <span>Balneario Destacado</span>
+              </div>
+          </div>
+
+          <p class="mt-6 text-slate-600 md:text-lg leading-relaxed max-w-4xl">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many
+          </p>
+      </div>
+
+
+      <!-- ========================================== -->
+      <!-- SECCIÓN DE SERVICIOS (AMENITIES)           -->
+      <!-- ========================================== -->
+      <div class="mt-12 md:mt-16">
+          <h2 class="text-2xl font-bold text-slate-800 mb-2">Servicios Destacados</h2>
+          <div class="w-full h-px bg-slate-200 mb-8"></div>
+          
+          <div class="flex flex-wrap gap-4">
+              <!-- Iteramos sobre la propiedad amenities del balneario -->
+              @for (amenity of resort.amenities; track amenity.id) {
+                  <div class="flex items-center gap-2.5 bg-white hover:bg-slate-50 transition-colors px-4 py-3 rounded-2xl text-slate-700 font-semibold text-sm border border-slate-200 shadow-sm">
+                      <!-- Si tienes íconos dinámicos usas amenity.iconName, sino puedes dejar uno por defecto como heroCheckCircle -->
+      
+                      <span>{{ amenity.name }}</span>
+                  </div>
+              }
+              <!-- Mensaje por si el balneario no tiene servicios cargados -->
+              @empty {
+                  <div class="w-full py-8 text-slate-500 flex items-center gap-2">
+                      <ng-icon name="heroInformationCircle" class="text-xl"></ng-icon>
+                      <p>Este balneario aún no ha detallado sus servicios.</p>
+                  </div>
+              }
+          </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SECCIÓN 2: PUBLICACIONES                   -->
+      <!-- ========================================== -->
+      <div class="mt-16">
+          <h2 class="text-2xl font-bold text-slate-800 mb-2">Publicaciones Recientes</h2>
+          <div class="w-full h-px bg-slate-200 mb-8"></div>
+          
+          @if (isPublicationsLoading()) {
+            <div class="py-12 text-center text-slate-500 flex justify-center items-center gap-2">
+               <div class="w-5 h-5 border-2 border-sky-200 border-t-sky-600 rounded-full animate-spin"></div>
+               Cargando novedades...
+            </div>
+          } @else {
+            <div class="w-full flex flex-wrap gap-3 md:gap-6">
+              @for (publication of publications(); track publication.id) {
+                  <publication-card [publication]="publication"></publication-card>
+              } 
+              @empty {
+                  <div class="w-full py-16 text-center text-slate-500 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                      <ng-icon name="heroSparkles" class="text-4xl text-slate-400 mb-2"></ng-icon>
+                      <p>Este balneario aún no ha publicado novedades.</p>
+                  </div>
+              }
+            </div>
+          }
+      </div>
+
+  </div>
+}

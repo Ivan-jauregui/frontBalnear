@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormInfrastructureData } from './form-infrastructure-data';
+import { PublicationCard } from './publication-card';
 
-describe('FormInfrastructureData', () => {
-  let component: FormInfrastructureData;
-  let fixture: ComponentFixture<FormInfrastructureData>;
+describe('PublicationCard', () => {
+  let component: PublicationCard;
+  let fixture: ComponentFixture<PublicationCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormInfrastructureData]
+      imports: [PublicationCard]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FormInfrastructureData);
+    fixture = TestBed.createComponent(PublicationCard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

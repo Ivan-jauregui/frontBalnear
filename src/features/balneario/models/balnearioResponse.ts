@@ -5,7 +5,6 @@ export interface BalnearioResponse{
     name:string;
     address:string;
     zone:string;
-    price:number;
     amenities: Amenity[];
     imageUrl :string;
 }

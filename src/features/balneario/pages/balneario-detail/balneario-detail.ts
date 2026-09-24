@@ -1,39 +1,28 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common'; // IMPORTANTE
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+
+import { 
+  heroMapPin, heroSun, heroSparkles, 
+  heroHeart, heroKey, heroArrowLeft, heroExclamationTriangle 
+} from '@ng-icons/heroicons/outline';
+
 import { BalnearioResponse } from '../../models/balnearioResponse';
 import { BalnearioService } from '../../service/balneario-service';
-import { ActivatedRoute, RouterModule } from '@angular/router'; // IMPORTANTE para volver atrás
-import { NgIcon, provideIcons } from '@ng-icons/core'; // IMPORTANTE para iconos
-// Importamos iconos estables de Heroicons Outline
-import { 
-  heroMapPin, 
-  heroSun, 
-  heroSparkles, 
-  heroHeart, 
-  heroKey, 
-  heroArrowLeft, 
-  heroExclamationTriangle 
-} from '@ng-icons/heroicons/outline';
+import { PublicationService } from '../../../publication/service/publication-service';
+import { PublicationResponse } from '../../../publication/models/publication-response';
+import { PublicationCard } from '../../components/publication-card/publication-card';
+import { AmenityService } from '../../../servicios/services/amenity-service';
 
 @Component({
   selector: 'app-balneario-detail',
-  standalone: true, // Asegurate que diga standalone: true
-  imports: [
-    CommonModule, // Necesario para pipes y directivas básicas
-    RouterModule, // Necesario si ponemos un botón de 'Volver'
-    NgIcon,       // Necesario para los iconos
-    CurrencyPipe, // Opcional si querés formatear precio acá
-  ], 
+  standalone: true,
+  imports: [CommonModule, RouterModule, NgIcon, CurrencyPipe, PublicationCard], 
   providers: [
-    // Registramos los iconos que vamos a usar en este componente
     provideIcons({ 
-      heroMapPin, 
-      heroSun, 
-      heroSparkles, 
-      heroHeart, 
-      heroKey, 
-      heroArrowLeft, 
-      heroExclamationTriangle 
+      heroMapPin, heroSun, heroSparkles, 
+      heroHeart, heroKey, heroArrowLeft, heroExclamationTriangle 
     })
   ],
   templateUrl: './balneario-detail.html',
@@ -42,36 +31,66 @@ import {
 export class BalnearioDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private balnearioService = inject(BalnearioService);
+  private publicationService = inject(PublicationService);
+  private amenityService = inject(AmenityService);
 
+  // Estados de datos
   balneario = signal<BalnearioResponse | null>(null);
-  isLoading = signal<boolean>(true);
+  publications = signal<PublicationResponse[] | null>(null);
+  
+  // SEPARADOS: Estados de carga
+  isBalnearioLoading = signal<boolean>(true);
+  isPublicationsLoading = signal<boolean>(true);
+  
+  // Estado de error global
   errorMessage = signal<string | null>(null);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id'); 
-      if (idParam) {
-        const idNumeric = Number(idParam); 
-        this.loadDetails(idNumeric);
+      const id = Number(idParam);
+      
+      // Verificamos que exista y sea un número válido
+      if (idParam && !isNaN(id)) {
+        this.loadDetails(id);
+        this.loadPublication(id);
       } else {
         this.errorMessage.set('No se proporcionó un ID de balneario válido.');
-        this.isLoading.set(false);
+        this.isBalnearioLoading.set(false);
+        this.isPublicationsLoading.set(false);
       }
     });
   }
 
   private loadDetails(id: number): void {
-    this.isLoading.set(true);
+    this.isBalnearioLoading.set(true);
     this.balnearioService.getById(id).subscribe({
       next: (response) => {
         this.balneario.set(response);
-        this.isLoading.set(false);
-        // console.log('Datos del balneario cargados:', response);
+      
+        this.isBalnearioLoading.set(false); 
       },
       error: (err) => {
         this.errorMessage.set(err.message || 'Error al cargar los detalles del balneario');
-        this.isLoading.set(false);
+        this.isBalnearioLoading.set(false);
       }
     });
+  }
+
+
+
+  private loadPublication(id: number): void {
+     this.isPublicationsLoading.set(true);
+     this.publicationService.getAll(id).subscribe({
+        next: (response) => {
+          this.publications.set(response);
+          this.isPublicationsLoading.set(false); 
+        },
+        error: (err) => {
+          console.error("Error al cargar publicaciones: ", err);
+          this.publications.set([]); // Lista vacía para que no rompa
+          this.isPublicationsLoading.set(false);
+        }
+     });
   }
 }

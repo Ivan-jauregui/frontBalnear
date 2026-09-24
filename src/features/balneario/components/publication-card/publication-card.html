@@ -1,0 +1,38 @@
+<!-- Cambiamos w-[48%] por w-28 (o w-[31%] si prefieres 3 por fila) -->
+<div class="group flex flex-col w-28 sm:w-40 lg:w-72 bg-white rounded-2xl shadow-md border border-sky-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+    
+    <!-- CONTENEDOR DE IMAGEN -->
+    <div class="relative w-full aspect-square lg:h-48 lg:aspect-auto overflow-hidden bg-slate-100">
+        <img 
+            [src]="publication().imageUrl" 
+            [alt]="publication().title"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        >
+
+        <!-- Hice la etiqueta un poco más pequeña (p-1 text-[8px]) para que entre bien si la foto es muy chica -->
+        <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 lg:px-3 lg:py-1 rounded-full text-[8px] lg:text-xs font-semibold text-sky-700 shadow-sm">
+            Novedad
+        </div>
+    </div>
+    
+    <!-- CONTENEDOR DE TEXTO Y DETALLES -->
+    <div class="hidden lg:flex p-5 flex-col flex-grow">
+    
+        <h3 class="text-lg font-bold text-slate-800 mb-2 line-clamp-1 group-hover:text-sky-600 transition-colors">
+            {{ publication().title }}
+        </h3>
+        
+        <p class="text-sm text-slate-600 mb-4 line-clamp-3 flex-grow">
+            {{ publication().description }}
+        </p>
+        
+        <div class="w-full h-px bg-slate-100 mb-4"></div>
+        
+        <div class="flex items-center text-xs text-slate-400 font-medium mt-auto">
+            <svg class="w-4 h-4 mr-1.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span>{{ publication().createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+    </div>
+</div>

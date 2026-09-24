@@ -124,6 +124,6 @@ export class BalnearioList {
 
   // --- NAVEGACIÓN  ---
   showDetails(id: number): void {
-    this.router.navigate([`/balneario/search/${id}`]);
+    this.router.navigate([`/balneario/${id}`]);
   }
 }
