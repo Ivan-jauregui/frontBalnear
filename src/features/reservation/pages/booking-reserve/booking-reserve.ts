@@ -1,9 +1,13 @@
-import { Component, computed, signal, ViewChild } from '@angular/core'; // <-- 1. Importa ViewChild
+import { Component, computed, inject, OnInit, signal, ViewChild } from '@angular/core'; // <-- 1. Importa ViewChild
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { MatDatepickerModule, MatCalendar } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { EmailService } from '../../../../shared/services/email-service';
+import { BalnearioService } from '../../../balneario/service/balneario-service';
+import { BalnearioResponse } from '../../../balneario/models/balnearioResponse';
+import { AuthService } from '../../../../app/core/service/auth-service';
 
 export interface BookingRequestDTO {
   seaSideResortId: number;
@@ -29,9 +33,12 @@ export interface BookingRequestDTO {
   templateUrl: './booking-reserve.html',
   styleUrl: './booking-reserve.css',
 })
-export class BookingReserve {
+export class BookingReserve implements OnInit {
   // 2. Obtén la referencia al calendario desde el HTML
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
+  emailService = inject(EmailService);
+  balnearioService = inject(BalnearioService);
+  authService = inject(AuthService);
 
   total = signal<number>(0);
   payPartial = signal<boolean>(false);
@@ -39,6 +46,7 @@ export class BookingReserve {
   selectedDate: Date | null = null;
   startDateObj = signal<Date | null>(null);
   endDateObj = signal<Date | null>(null);
+  balneario = signal<BalnearioResponse | null>(null);
 
   bookingData: BookingRequestDTO = {
     seaSideResortId: 1,
@@ -48,6 +56,14 @@ export class BookingReserve {
     endDate: '',
     payPartial: this.payPartial()
   };
+
+  ngOnInit() {
+    this.balnearioService.getById(this.bookingData.seaSideResortId).subscribe({
+      next: (data) => {
+        this.balneario.set(data);
+      }
+    })
+  }
 
   //Precio base de prueba
   private readonly BASE_RATE = 100;
@@ -127,6 +143,25 @@ export class BookingReserve {
   };
 
   submitBooking(): void {
-    window.alert('Payload listo para enviar: ' + JSON.stringify(this.bookingData, null, 2));
+    const emailParams = {
+      email: this.authService.currentUser()?.email,
+      user_name: this.authService.currentUser()?.firstName,
+      resort_name: this.balneario()?.name,
+      numberRow: this.bookingData.numberRow,
+      numberBeachTent: this.bookingData.numberBeachTent,
+      startDate: this.bookingData.startDate,
+      endDate: this.bookingData.endDate,
+      price: `$${this.totalToPay()}`,
+      website_link: `front-balnear.vercel.app`
+    }
+    this.emailService.sendEmail(emailParams)
+      .then((response) => {
+        console.log('Correo enviado con éxito:', response);
+        window.alert('¡Reserva enviada y correo de confirmación despachado!');
+      })
+      .catch((err) => {
+        console.error('Error enviando email:', err);
+        window.alert('Ocurrió un error al enviar el correo.');
+      });
   }
 }
