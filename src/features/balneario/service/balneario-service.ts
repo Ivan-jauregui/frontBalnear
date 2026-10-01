@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { catchError, throwError } from 'rxjs';
 import { BalnearioFilterDto } from '../models/balnearioFilterDto';
 import { PageResponse } from '../../../shared/models/pageResponse';
+import { CommentResponse } from '../../comments/models/comment-response';
 
 @Injectable({
   providedIn: 'root',
@@ -69,5 +70,8 @@ export class BalnearioService {
     return this.http.post<any>(`${this.apiUrl}/${id}/image`,formData)
   }
 
+  getAllCommentsBySeaSideResortId(id:number):Observable<CommentResponse[]>{
+        return this.http.get<CommentResponse[]>(`${this.apiUrl}/${id}/comments`)
+  }
   
 }

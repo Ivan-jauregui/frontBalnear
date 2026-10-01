@@ -95,52 +95,123 @@
       </button>
     </div>
     }
+<!-- ================= PASO 2: DATOS COMERCIALES ================= -->
+@if (step() === 2) {
+<div formArrayName="rates" class="flex flex-col gap-6">
 
-    <!-- ================= PASO 2: DATOS COMERCIALES ================= -->
-    @if (step() === 2) {
-    <div formGroupName="rates" class="flex flex-col gap-6">
+  <!-- Bucle para cada tarifa -->
+  <div *ngFor="let rate of rateArray.controls; let i = index" [formGroupName]="i"
+    class="p-6 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-6 shadow-sm">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Precio Base -->
-        <div class="flex flex-col gap-2">
-          <label for="basePrice" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-            Precio Base ($) <span class="text-rose-500">*</span>
-          </label>
-          <div class="relative">
-            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
-            <input id="basePrice" type="number" placeholder="0.00" formControlName="basePrice"
-              class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
-          </div>
-        </div>
-
-        <!-- Precio de Temporada -->
-        <div class="flex flex-col gap-2">
-          <label for="seasonalPrice" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-            Precio Temporada ($) <span class="text-rose-500">*</span>
-          </label>
-          <div class="relative">
-            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
-            <input id="seasonalPrice" type="number" placeholder="0.00" formControlName="seasonalPrice"
-              class="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
-          </div>
-        </div>
-      </div>
-
+    <div class="flex justify-between items-center border-b border-slate-200/60 pb-3">
+      <span class="text-xs font-black uppercase tracking-wider text-slate-800">
+        Configuración Tarifa #{{ i + 1 }}
+      </span>
+      <!-- Botón para quitar tarifa -->
+      <button *ngIf="rateArray.length > 1" type="button" (click)="eliminarTarifa(i)"
+        class="text-xs text-rose-500 font-bold hover:text-rose-600 hover:underline transition-colors">
+        Eliminar Tarifa
+      </button>
     </div>
 
-    <!-- BOTONES NAVEGACIÓN -->
-    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
-      <button type="button" (click)="previousStep()"
-        class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
-        Anterior
-      </button>
-      <button type="button" (click)="nextStep()" [disabled]="!isRatesDataValid"
-        class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
-        Siguiente
-      </button>
+    <!-- Nombre de la tarifa y Precio -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-2">
+        <label [for]="'rateName_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Nombre de la Tarifa <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'rateName_' + i" type="text" formControlName="name" placeholder="Ej: Temporada Alta"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label [for]="'price_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Precio <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'price_' + i" type="number" formControlName="price" placeholder="Ej: 15000"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+    </div>
+
+    <!-- Tipo de Tarifa -->
+    <div class="flex flex-col gap-2">
+      <label [for]="'rateType_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+        Tipo de Tarifa <span class="text-rose-500">*</span>
+      </label>
+      <select [id]="'rateType_' + i" formControlName="rateType"
+        class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200 cursor-pointer">
+        <option value="" disabled selected>Selecciona un tipo</option>
+        <option value="FECHA_FIJA">Fecha Fija</option>
+        <option value="POR_DIAS">Por Días</option>
+      </select>
+    </div>
+
+    <!-- Variable local para leer el tipo seleccionado dinámicamente -->
+    @let selectedType = rate.value.rateType;
+
+    <!-- OPCIÓN 1: POR DÍAS (Muestra solo días mínimos y máximos) -->
+    @if (selectedType === 'POR_DIAS') {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-2">
+        <label [for]="'minDays_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Días Mínimos <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'minDays_' + i" type="number" formControlName="minDays" placeholder="Ej: 1"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label [for]="'maxDays_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Días Máximos <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'maxDays_' + i" type="number" formControlName="maxDays" placeholder="Ej: 30"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium placeholder:text-slate-400 focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
     </div>
     }
 
+    <!-- OPCIÓN 2: FECHA FIJA (Muestra solo fecha de inicio y fin) -->
+    @if (selectedType === 'FECHA_FIJA') {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-2">
+        <label [for]="'startDate_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Fecha Inicio <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'startDate_' + i" type="date" formControlName="startDate"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label [for]="'endDate_' + i" class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+          Fecha Fin <span class="text-rose-500">*</span>
+        </label>
+        <input [id]="'endDate_' + i" type="date" formControlName="endDate"
+          class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 text-sm font-medium focus:outline-none focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 transition-all duration-200" />
+      </div>
+    </div>
+    }
+
+  </div>
+
+  <!-- Botón para agregar nueva tarifa -->
+  <button type="button" (click)="agregarTarifa()"
+    class="w-full border-2 border-dashed border-slate-300 hover:border-sky-500 bg-slate-50/50 hover:bg-sky-50/30 p-4 rounded-2xl text-slate-600 hover:text-sky-600 font-extrabold text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.99]">
+    + Añadir otra tarifa comercial
+  </button>
+</div>
+
+<!-- BOTONES NAVEGACIÓN PASO 2 -->
+<div class="mt-4 pt-4 border-t border-slate-100 flex justify-between gap-4">
+  <button type="button" (click)="previousStep()"
+    class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-black text-xs px-8 py-4 rounded-xl transition-all duration-200 active:scale-95">
+    Anterior
+  </button>
+  <button type="button" (click)="nextStep()" [disabled]="!isRatesDataValid"
+    class="w-full sm:w-auto bg-slate-900 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-black text-xs px-8 py-4 rounded-xl shadow-md transition-all duration-200 active:scale-95">
+    Siguiente
+  </button>
+</div>
+}
     <!-- ================= PASO 3: INFRAESTRUCTURA ================= -->
 @if (step() === 3) {
 <div formArrayName="rows" class="flex flex-col gap-6">

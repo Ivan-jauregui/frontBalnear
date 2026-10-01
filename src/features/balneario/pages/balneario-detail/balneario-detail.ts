@@ -14,11 +14,14 @@ import { PublicationService } from '../../../publication/service/publication-ser
 import { PublicationResponse } from '../../../publication/models/publication-response';
 import { PublicationCard } from '../../components/publication-card/publication-card';
 import { AmenityService } from '../../../servicios/services/amenity-service';
+import { CommentResponse } from '../../../comments/models/comment-response';
+import { CommentService } from '../../../comments/services/comment-service';
+import { CommentCard } from '../../components/comment-card/comment-card';
 
 @Component({
   selector: 'app-balneario-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgIcon, CurrencyPipe, PublicationCard], 
+  imports: [CommonModule, RouterModule, NgIcon, CurrencyPipe, PublicationCard,CommentCard], 
   providers: [
     provideIcons({ 
       heroMapPin, heroSun, heroSparkles, 
@@ -32,15 +35,18 @@ export class BalnearioDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private balnearioService = inject(BalnearioService);
   private publicationService = inject(PublicationService);
+  private commentService = inject(CommentService);
   private amenityService = inject(AmenityService);
 
   // Estados de datos
   balneario = signal<BalnearioResponse | null>(null);
   publications = signal<PublicationResponse[] | null>(null);
+  comments = signal<CommentResponse[] | null>(null);
   
   // SEPARADOS: Estados de carga
   isBalnearioLoading = signal<boolean>(true);
   isPublicationsLoading = signal<boolean>(true);
+  isCommentsLoading = signal<boolean>(true);
   
   // Estado de error global
   errorMessage = signal<string | null>(null);
@@ -54,10 +60,12 @@ export class BalnearioDetail implements OnInit {
       if (idParam && !isNaN(id)) {
         this.loadDetails(id);
         this.loadPublication(id);
+        this.loadComment(id)
       } else {
         this.errorMessage.set('No se proporcionó un ID de balneario válido.');
         this.isBalnearioLoading.set(false);
         this.isPublicationsLoading.set(false);
+        this.isCommentsLoading.set(false);
       }
     });
   }
@@ -67,7 +75,6 @@ export class BalnearioDetail implements OnInit {
     this.balnearioService.getById(id).subscribe({
       next: (response) => {
         this.balneario.set(response);
-      
         this.isBalnearioLoading.set(false); 
       },
       error: (err) => {
@@ -90,6 +97,24 @@ export class BalnearioDetail implements OnInit {
           console.error("Error al cargar publicaciones: ", err);
           this.publications.set([]); // Lista vacía para que no rompa
           this.isPublicationsLoading.set(false);
+        }
+     });
+  }
+
+
+
+  private loadComment(id: number): void {
+     this.isCommentsLoading.set(true);
+     this.balnearioService.getAllCommentsBySeaSideResortId(id).subscribe({
+        next: (response) => {
+          this.comments.set(response);
+          console.log(this.comments())
+          this.isCommentsLoading.set(false); 
+        },
+        error: (err) => {
+          console.error("Error al cargar publicaciones: ", err);
+          this.comments.set([]);
+          this.isCommentsLoading.set(false);
         }
      });
   }

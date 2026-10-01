@@ -59,10 +59,9 @@ export class CreateBalneario implements OnInit {
       ]),
 
       // Objeto anidado de tarifas (Paso 2)
-      rates: this.fb.group({
-        basePrice: ['', [Validators.required, Validators.min(1)]],
-        seasonalPrice: ['', [Validators.required, Validators.min(1)]],
-      }),
+      rates: this.fb.array([
+        this.crearTarifa() // Inicia con la primera fila por defecto
+      ]),
     });
   }
 
@@ -92,6 +91,37 @@ export class CreateBalneario implements OnInit {
     }
   }
 
+
+  // Estructurador para añadir tarifa al array dinámico
+  crearTarifa(): FormGroup {
+    return this.fb.group({
+      name: ["", [Validators.required,Validators.minLength(3)]],
+      rateType: ['', [Validators.required]],
+      startDate: [''],
+      endDate: [''],
+      minDays: [''],
+      maxDays: [''],
+      price: ['',[ Validators.required,Validators.min(1)]], 
+    });
+  }
+  // Getter fundamental para iterar e interactuar con las carpas en el HTML
+  get rateArray(): FormArray {
+    return this.form.get('rates') as FormArray;
+  }
+
+  // Métodos dinámicos para añadir o quitar filas desde el HTML (Paso 3)
+  agregarTarifa(): void {
+    const siguienteNumero = this.rateArray.length + 1;
+    this.rateArray.push(this.crearTarifa());
+  }
+
+  eliminarTarifa(index: number): void {
+    if (this.rateArray.length > 1) {
+      this.rateArray.removeAt(index);
+    }
+  }
+
+
   // GETTERS DE VALIDACIÓN INDEPENDIENTES PARA TUS STEPS
   get isBasicDataValid(): boolean {
     const fields = ['name', 'description', 'zone', 'address', 'ownerId', 'startDate', 'endDate'];
@@ -99,7 +129,7 @@ export class CreateBalneario implements OnInit {
   }
 
   get isRatesDataValid(): boolean {
-    return (this.form.get('rates') as FormGroup).valid;
+    return this.rateArray.valid;
   }
 
   get isRowsValid(): boolean {
