@@ -7,6 +7,8 @@ import { catchError, throwError } from 'rxjs';
 import { BalnearioFilterDto } from '../models/balnearioFilterDto';
 import { PageResponse } from '../../../shared/models/pageResponse';
 import { CommentResponse } from '../../comments/models/comment-response';
+import { SolicitudeRequest } from '../../solicitude/models/solicitude-request';
+import { SolicitudeResponse } from '../../solicitude/models/solicitude-response';
 
 @Injectable({
   providedIn: 'root',
@@ -72,6 +74,10 @@ export class BalnearioService {
 
   getAllCommentsBySeaSideResortId(id:number):Observable<CommentResponse[]>{
         return this.http.get<CommentResponse[]>(`${this.apiUrl}/${id}/comments`)
+  }
+
+  makeSolicitude(req:SolicitudeRequest):Observable<SolicitudeResponse>{
+    return this.http.post<SolicitudeResponse>(this.apiUrl+"/solicitude",req)
   }
   
 }

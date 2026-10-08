@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserResponse } from '../../../shared/dto/response/UserResponse';
+import { SolicitudeResponse } from '../../solicitude/models/solicitude-response';
 
 
 
@@ -16,6 +17,14 @@ export class DashboardService {
 
     getClients(): Observable<UserResponse[]>{
       return this.http.get<UserResponse[]>(`${this.apiUrl}`)
+    }
+
+    getAllSolicitude():Observable<SolicitudeResponse[]>{
+      return this.http.get<SolicitudeResponse[]>(this.apiUrl+"/solicitude")
+    }
+
+    getByIdSolicitude(id:number):Observable<SolicitudeResponse>{
+      return this.http.get<SolicitudeResponse>(this.apiUrl+"/solicitude"+id)
     }
 
 }

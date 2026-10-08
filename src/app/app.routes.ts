@@ -17,6 +17,7 @@ import { Register } from '../features/auth/pages/register/register';
 
 
 import { authGuard } from './core/guards/auth-guard'; 
+import { SolicitudeList } from '../features/dashboard/pages/solicitude-list/solicitude-list';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -34,6 +35,7 @@ export const routes: Routes = [
 
     // Dashboard'
     { path: 'dashboard', component: DashboardOwner },
+    { path: 'dashboard/solicitude', component: SolicitudeList },
 
     // Logeo y registro
     { path: 'login', component: Login },

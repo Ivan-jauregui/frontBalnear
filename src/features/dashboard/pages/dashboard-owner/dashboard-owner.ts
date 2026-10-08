@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Graphic } from "../../components/graphic/graphic";
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-owner',
-  imports: [Graphic,CommonModule],
+  imports: [Graphic, CommonModule, RouterLink],
   templateUrl: './dashboard-owner.html',
   styleUrl: './dashboard-owner.css',
 })

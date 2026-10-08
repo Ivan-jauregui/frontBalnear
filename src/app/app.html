@@ -1,4 +1,8 @@
-<app-navbar></app-navbar>
-<router-outlet />
-<app-footer></app-footer>
+<app-navbar class="header"></app-navbar>
 
+<!-- Envolvemos el router-outlet en una etiqueta semántica real -->
+<main class="main">
+    <router-outlet />
+</main>
+
+<app-footer class="footer"></app-footer>
