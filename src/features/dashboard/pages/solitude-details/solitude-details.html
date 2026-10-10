@@ -1,0 +1,111 @@
+<div class="mx-auto max-w-3xl px-4 py-8">
+    <!-- Botón Volver -->
+    <div class="mb-6">
+      <button 
+        routerLink="/dashboard/solicitude" 
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Volver al listado
+      </button>
+    </div>
+  
+    @if (solicitude(); as item) {
+      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        
+        <!-- Cabecera de la Tarjeta -->
+        <div class="border-b border-slate-100 bg-slate-50/50 p-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+                Solicitud #{{ item.id }}
+                <span class="font-normal text-slate-300">| Fila {{ item.rowNumber }}</span>
+                
+                <!-- Punto azul indicador si posee nota -->
+                @if (item.note) {
+                  <span 
+                    class="h-2.5 w-2.5 rounded-full bg-blue-500 ring-4 ring-blue-100" 
+                    title="Tiene nota asignada">
+                  </span>
+                }
+              </span>
+              <h1 class="mt-1 text-2xl font-bold text-slate-800">Detalle de Solicitud</h1>
+            </div>
+  
+            <!-- Badge de Estado -->
+            <div>
+              <span 
+                class="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold"
+                [ngClass]="{
+            'bg-emerald-100 text-emerald-800': item?.state === SolicitudeState.ACEPTADA_CLIENTE,
+            'bg-amber-100 text-amber-800': item?.state === SolicitudeState.PROPUESTA_ENVIADA,
+            'bg-rose-100 text-rose-800': item?.state === SolicitudeState.SOLICITUD_CERRADA,
+            'bg-slate-100 text-slate-700': !item?.state || item?.state === SolicitudeState.RECIBIDA
+          }">
+                {{ item.state || 'RECIBIDA' }}
+              </span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Cuerpo del Detalle -->
+        <div class="p-6 space-y-6">
+  
+          <!-- Datos del Usuario -->
+          <div class="rounded-xl border border-slate-100 bg-slate-50 p-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Información del Cliente</p>
+            <p class="text-base font-semibold text-slate-800 flex items-center gap-2">
+              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+              {{ item.userEmail }}
+            </p>
+          </div>
+  
+          <!-- Rango de Fechas -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-xl border border-slate-100 p-4">
+              <p class="text-xs font-medium text-slate-400">Fecha de Inicio</p>
+              <p class="text-lg font-semibold text-slate-800 mt-1">
+                {{ item.startDate | date:'fullDate' }}
+              </p>
+            </div>
+            <div class="rounded-xl border border-slate-100 p-4">
+              <p class="text-xs font-medium text-slate-400">Fecha de Fin</p>
+              <p class="text-lg font-semibold text-slate-800 mt-1">
+                {{ item.endDate | date:'fullDate' }}
+              </p>
+            </div>
+          </div>
+  
+          <!-- Bloque de Nota / Observación -->
+          @if (item.note) {
+            <div class="rounded-xl border border-blue-100 bg-blue-50/50 p-5 text-blue-950">
+              <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2 flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+                Preferencias / Nota del Cliente
+              </p>
+              <p class="text-sm leading-relaxed whitespace-pre-line">
+                {{ item.note }}
+              </p>
+            </div>
+          }
+  
+        </div>
+  
+        <!-- Pie de página con información de creación -->
+        <div class="border-t border-slate-100 bg-slate-50/30 px-6 py-4 text-xs text-slate-400 flex justify-between items-center">
+          <span>ID Registro: {{ item.id }}</span>
+          <span>Creado el {{ item.created_at | date:'medium' }}</span>
+        </div>
+  
+      </div>
+    } @else {
+      <!-- Estado de Carga (Skeleton/Spinner) -->
+      <div class="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+        <div class="h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+        <p class="mt-4 text-sm font-medium text-slate-500">Cargando detalles de la solicitud...</p>
+      </div>
+    }
+  </div>

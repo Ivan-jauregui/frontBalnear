@@ -1,17 +1,21 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { SolicitudeResponse } from '../../../solicitude/models/solicitude-response';
 import { DashboardService } from '../../service/dashboard-service';
 import { SolicitudeCard } from '../../components/solicitude-card/solicitude-card';
+import { RouterLink } from '@angular/router';
+import { SolicitudeState } from '../../../solicitude/enum/solicitude-state';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-solicitude-list',
-  imports: [SolicitudeCard],
+  imports: [SolicitudeCard,RouterLink,FormsModule],
   templateUrl: './solicitude-list.html',
   styleUrl: './solicitude-list.css',
 })
 export class SolicitudeList implements OnInit{
   private dashboardService = inject(DashboardService)
   solicitudes=signal<SolicitudeResponse[]>([]);
+  selectedState = signal<SolicitudeState| undefined>(undefined)
 
   ngOnInit(){
     this.dashboardService.getAllSolicitude().subscribe({
@@ -23,6 +27,18 @@ export class SolicitudeList implements OnInit{
         console.log("ERROR: Error en el servidor: "+err)
       }
     })
+  }
+
+  filteredSolcitudes=computed(()=>{
+    const estadoActual = this.selectedState();
+    if (!estadoActual) return this.solicitudes(); 
+    
+    return this.solicitudes().filter(s => s.state === estadoActual);
+  })
+
+  changeState(event:Event){
+    const state = event.target as HTMLSelectElement;
+    this.selectedState.set(state.value as SolicitudeState);
   }
 
 }

@@ -12,19 +12,22 @@ import { SolicitudeResponse } from '../../solicitude/models/solicitude-response'
 })
 export class DashboardService {
     private http = inject(HttpClient);
-    //cambiar el nombre a una variable que se agarre del login de los owners
-    private apiUrl = "http://localhost:8080/api/v1/dashboard";
+    //Termporalmente comentado para poner json-server
+    //private apiUrl = "http://localhost:8080/api/v1/dashboard";
+    private apiUrl = "http://localhost:5000/solicitude";
 
     getClients(): Observable<UserResponse[]>{
       return this.http.get<UserResponse[]>(`${this.apiUrl}`)
     }
 
     getAllSolicitude():Observable<SolicitudeResponse[]>{
-      return this.http.get<SolicitudeResponse[]>(this.apiUrl+"/solicitude")
+      //return this.http.get<SolicitudeResponse[]>(this.apiUrl+"/solicitude")
+      return this.http.get<SolicitudeResponse[]>(this.apiUrl)
     }
 
     getByIdSolicitude(id:number):Observable<SolicitudeResponse>{
-      return this.http.get<SolicitudeResponse>(this.apiUrl+"/solicitude"+id)
+      //return this.http.get<SolicitudeResponse>(this.apiUrl+"/solicitude"+id)
+      return this.http.get<SolicitudeResponse>(this.apiUrl+"/"+id)
     }
 
 }

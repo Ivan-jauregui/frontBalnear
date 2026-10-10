@@ -1,6 +1,53 @@
-<div class="flex flex-col  text-center">
-    <p class="text-3xl">Solicitudes</p>
-    @for (solicitude of solicitudes(); track $index) {
+<div class="mx-auto max-w-4xl px-4 py-6">
+  
+
+   <div class="mb-6">
+    <button 
+      routerLink="/dashboard" 
+      class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900">
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Volver al Dashboard
+    </button>
+  </div>
+
+    <h2 class="mb-6 text-center text-3xl font-bold tracking-tight text-slate-800">
+      Solicitudes del Balneario
+    </h2>
+
+    <div class="flex gap-4 mb-4 items-center">
+      <input type="text" placeholder="Intorduce email del usuario..." class="border border-gray-200 p-2 rounded-sm w-1/3">
+
+      <fieldset class="flex gap-2">
+        <label for="">Estado</label>
+        <select  [value]="selectedState()"
+                (change)="changeState($event)">
+          <option value="" disabled>Selecciona una opción</option>
+          <option value="RECIBIDA">Recibido</option>
+          <option value="PROPUESTA_ENVIADA">Propuesta Enviada</option>
+          <option value="ACEPTADA_CLIENTE">Aceptada Cliente</option>
+          <option value="SOLICITUD_CERRADA">Solicitud Cerrada</option>
+        </select>
+      </fieldset>
+      
+      <button 
+      (click)="changeState($event)"
+      class="inline-flex items-center gap-1.5 rounded-lg bg-slate-600 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-slate-700 hover:text-gray-100">
+      <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+      Limpiar Filtro
+    </button>
+    </div>
+  
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      @for (solicitude of filteredSolcitudes(); track solicitude.id || $index) {
         <solicitude-card [solicitude]="solicitude"></solicitude-card>
-    }
-</div>
+      } @empty {
+        <div class="col-span-full py-12 text-center text-slate-400">
+          No hay solicitudes para mostrar.
+        </div>
+      }
+    </div>
+  </div>

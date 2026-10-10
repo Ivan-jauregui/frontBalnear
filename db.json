@@ -1,0 +1,104 @@
+{
+    "solicitude": [
+      {
+        "id": 1,
+        "userEmail": "juan.perez@email.com",
+        "rowNumber": 101,
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-10",
+        "note": "",
+        "state": "RECIBIDA",
+        "created_at": "2026-10-01T09:30:00Z"
+      },
+      {
+        "id": 2,
+        "userEmail": "maria.gomez@email.com",
+        "rowNumber": 102,
+        "startDate": "2026-11-05",
+        "endDate": "2026-11-15",
+        "note": "Cotización para grupo corporativo.",
+        "state": "PROPUESTA_ENVIADA",
+        "created_at": "2026-10-02T10:15:00Z"
+      },
+      {
+        "id": 3,
+        "userEmail": "carlos.lopez@email.com",
+        "rowNumber": 103,
+        "startDate": "2026-12-01",
+        "endDate": "2026-12-20",
+        "note": "",
+        "state": "ACEPTADA_CLIENTE",
+        "created_at": "2026-10-03T11:00:00Z"
+      },
+      {
+        "id": 4,
+        "userEmail": "ana.martinez@email.com",
+        "rowNumber": 104,
+        "startDate": "2026-10-15",
+        "endDate": "2026-10-22",
+        "note": "Cancelación por cambio de fechas.",
+        "state": "SOLICITUD_CERRADA",
+        "created_at": "2026-10-04T14:20:00Z"
+      },
+      {
+        "id": 5,
+        "userEmail": "luis.fernandez@email.com",
+        "rowNumber": 105,
+        "startDate": "2026-11-12",
+        "endDate": "2026-11-18",
+        "note": "Requiere transporte desde el aeropuerto.",
+        "state": "RECIBIDA",
+        "created_at": "2026-10-05T16:45:00Z"
+      },
+      {
+        "id": 6,
+        "userEmail": "sofia.rodriguez@email.com",
+        "rowNumber": 106,
+        "startDate": "2026-12-10",
+        "endDate": "2026-12-15",
+        "note": "Propuesta de descuento aplicada.",
+        "state": "PROPUESTA_ENVIADA",
+        "created_at": "2026-10-06T08:50:00Z"
+      },
+      {
+        "id": 7,
+        "userEmail": "diego.sanchez@email.com",
+        "rowNumber": 107,
+        "startDate": "2027-01-05",
+        "endDate": "2027-01-15",
+        "note": "Confirmado pago inicial del 50%.",
+        "state": "ACEPTADA_CLIENTE",
+        "created_at": "2026-10-07T12:10:00Z"
+      },
+      {
+        "id": 8,
+        "userEmail": "laura.torres@email.com",
+        "rowNumber": 108,
+        "startDate": "2026-10-20",
+        "endDate": "2026-10-25",
+        "note": "Solicitud duplicada, se cierra gestión.",
+        "state": "SOLICITUD_CERRADA",
+        "created_at": "2026-10-08T13:00:00Z"
+      },
+      {
+        "id": 9,
+        "userEmail": "pedro.ramirez@email.com",
+        "rowNumber": 109,
+        "startDate": "2026-11-20",
+        "endDate": "2026-11-30",
+        "note": "Pendiente de respuesta del cliente.",
+        "state": "PROPUESTA_ENVIADA",
+        "created_at": "2026-10-09T10:00:00Z"
+      },
+      {
+        "id": 10,
+        "userEmail": "lucia.diaz@email.com",
+        "rowNumber": 110,
+        "startDate": "2026-12-24",
+        "endDate": "2027-01-02",
+        "note": "Reserva especial para fiestas de fin de año.",
+        "state": "RECIBIDA",
+        "created_at": "2026-10-09T15:30:00Z"
+      }
+    ]
+  }
