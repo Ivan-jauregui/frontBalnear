@@ -32,11 +32,11 @@ export const routes: Routes = [
     { path: 'balneario/:id', component: BalnearioDetail },
     { path: 'balneario/:id/imagen', component: UploadImage, canActivate: [authGuard] },
 
-    {path: 'reserve',component: BookingReserve},
+    {path: 'reservar/balneario/:id',component: BookingReserve, canActivate: [authGuard] },
 
     // Dashboard'
     { path: 'dashboard', component: DashboardOwner },
-    { path: 'dashboard/solicitude', component: SolicitudeList },
+    { path: 'dashboard/solicitude/balneario/:id', component: SolicitudeList },
     { path: 'dashboard/solicitude/details/:id', component: SolicitudeDetails },
 
     // Logeo y registro

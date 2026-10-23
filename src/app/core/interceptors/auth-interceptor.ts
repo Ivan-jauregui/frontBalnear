@@ -7,9 +7,13 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const authService = inject(AuthService);
   const token = authService.getAccessToken();
 
-  // 1. Si hay Access Token, lo adjuntamos en los Headers
+
+  const isAuthUrl = req.url.includes('/auth/login') || 
+                    req.url.includes('/auth/register') || 
+                    req.url.includes('/auth/refresh-token');
+
   let authReq = req;
-  if (token) {
+  if (token && !isAuthUrl) {
     authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
@@ -19,13 +23,12 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      // 2. Si da 401 Unauthorized y NO es la llamada de login o refresh
-      if (error.status === 401 && !req.url.includes('/auth/login') && !req.url.includes('/auth/refresh-token')) {
+      // Si da 401 y NO es una URL de autenticación, procedemos al Refresh Token automático
+      if (error.status === 401 && !isAuthUrl) {
         
-        // 3. Pedimos un nuevo Access Token usando el Refresh Token
         return authService.refreshToken().pipe(
           switchMap((res) => {
-            // 4. Si el refresh fue exitoso, clonamos la petición ORIGINAL con el NUEVO token y la reenviamos
+            // Clonamos la petición ORIGINAL con el NUEVO token obtenido
             const newReq = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${res.accessToken}`
@@ -34,9 +37,8 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
             return next(newReq);
           }),
           catchError((refreshErr) => {
-            // 5. Si el Refresh Token también venció o falló, cerramos sesión
+            // Si el Refresh Token también falló, limpiamos sesión y redirigimos
             authService.logout();
-
             return throwError(() => refreshErr);
           })
         );

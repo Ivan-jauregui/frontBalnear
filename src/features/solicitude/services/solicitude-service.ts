@@ -12,10 +12,6 @@ export class SolicitudeService {
   private apiUrl = "http://localhost:8080/api/v1/solicitude";
 
 
-  save(req:SolicitudeRequest):Observable<SolicitudeResponse>{
-    return this.http.post<SolicitudeResponse>(this.apiUrl,req)
-  }
-
   getAll():Observable<SolicitudeResponse[]>{
     return this.http.get<SolicitudeResponse[]>(this.apiUrl)
   }

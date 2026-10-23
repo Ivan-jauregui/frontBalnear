@@ -3,12 +3,13 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { BalnearioResponse } from '../models/balnearioResponse';
 import { BalnearioRequest } from '../models/balnearioRequest';
 import { Observable } from 'rxjs/internal/Observable';
-import { catchError, throwError } from 'rxjs';
+import { catchError, ObservableLike, throwError } from 'rxjs';
 import { BalnearioFilterDto } from '../models/balnearioFilterDto';
 import { PageResponse } from '../../../shared/models/pageResponse';
 import { CommentResponse } from '../../comments/models/comment-response';
 import { SolicitudeRequest } from '../../solicitude/models/solicitude-request';
 import { SolicitudeResponse } from '../../solicitude/models/solicitude-response';
+import { Row } from '../../row/model/row';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +75,10 @@ export class BalnearioService {
 
   getAllCommentsBySeaSideResortId(id:number):Observable<CommentResponse[]>{
         return this.http.get<CommentResponse[]>(`${this.apiUrl}/${id}/comments`)
+  }
+
+  getAllRowsBySeaSideResortId(id:number):Observable<Row[]>{
+    return this.http.get<Row[]>((`${this.apiUrl}/${id}/rows`))
   }
 
   makeSolicitude(req:SolicitudeRequest):Observable<SolicitudeResponse>{

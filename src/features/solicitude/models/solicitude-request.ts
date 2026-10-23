@@ -1,7 +1,7 @@
 export interface SolicitudeRequest{
     userId:number;
     rowId:number;
-    balnearioId:number;
+    seaSideResortId:number;
     startDate:Date;
     endDate:Date;
     note:string;

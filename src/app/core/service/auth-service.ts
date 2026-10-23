@@ -18,6 +18,16 @@ export class AuthService {
 
   private apiUrl = "http://localhost:8080/api/v1/auth";
 
+    constructor() {
+
+    if (this.getAccessToken()) {
+      console.log("Token: " +this.getAccessToken())
+      this.fetchCurrentUser().subscribe({
+        error: () => this.logout() 
+      });
+    }
+  }
+
   getAccessToken(): string | null {
     return localStorage.getItem('access_token');
   }

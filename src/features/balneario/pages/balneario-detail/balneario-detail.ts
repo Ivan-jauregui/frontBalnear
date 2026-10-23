@@ -1,11 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 
-import { 
-  heroMapPin, heroSun, heroSparkles, 
-  heroHeart, heroKey, heroArrowLeft, heroExclamationTriangle 
+import {
+  heroMapPin, heroSun, heroSparkles,
+  heroHeart, heroKey, heroArrowLeft, heroExclamationTriangle
 } from '@ng-icons/heroicons/outline';
 
 import { BalnearioResponse } from '../../models/balnearioResponse';
@@ -21,11 +21,11 @@ import { CommentCard } from '../../components/comment-card/comment-card';
 @Component({
   selector: 'app-balneario-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgIcon, CurrencyPipe, PublicationCard,CommentCard], 
+  imports: [CommonModule, RouterModule, NgIcon, CurrencyPipe, PublicationCard, CommentCard],
   providers: [
-    provideIcons({ 
-      heroMapPin, heroSun, heroSparkles, 
-      heroHeart, heroKey, heroArrowLeft, heroExclamationTriangle 
+    provideIcons({
+      heroMapPin, heroSun, heroSparkles,
+      heroHeart, heroKey, heroArrowLeft, heroExclamationTriangle
     })
   ],
   templateUrl: './balneario-detail.html',
@@ -33,6 +33,7 @@ import { CommentCard } from '../../components/comment-card/comment-card';
 })
 export class BalnearioDetail implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private balnearioService = inject(BalnearioService);
   private publicationService = inject(PublicationService);
   private commentService = inject(CommentService);
@@ -42,20 +43,20 @@ export class BalnearioDetail implements OnInit {
   balneario = signal<BalnearioResponse | null>(null);
   publications = signal<PublicationResponse[] | null>(null);
   comments = signal<CommentResponse[] | null>(null);
-  
-  // SEPARADOS: Estados de carga
+
+  // Estados de carga
   isBalnearioLoading = signal<boolean>(true);
   isPublicationsLoading = signal<boolean>(true);
   isCommentsLoading = signal<boolean>(true);
-  
+
   // Estado de error global
   errorMessage = signal<string | null>(null);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id'); 
+      const idParam = params.get('id');
       const id = Number(idParam);
-      
+
       // Verificamos que exista y sea un número válido
       if (idParam && !isNaN(id)) {
         this.loadDetails(id);
@@ -75,7 +76,7 @@ export class BalnearioDetail implements OnInit {
     this.balnearioService.getById(id).subscribe({
       next: (response) => {
         this.balneario.set(response);
-        this.isBalnearioLoading.set(false); 
+        this.isBalnearioLoading.set(false);
       },
       error: (err) => {
         this.errorMessage.set(err.message || 'Error al cargar los detalles del balneario');
@@ -87,35 +88,39 @@ export class BalnearioDetail implements OnInit {
 
 
   private loadPublication(id: number): void {
-     this.isPublicationsLoading.set(true);
-     this.publicationService.getAll(id).subscribe({
-        next: (response) => {
-          this.publications.set(response);
-          this.isPublicationsLoading.set(false); 
-        },
-        error: (err) => {
-          console.error("Error al cargar publicaciones: ", err);
-          this.publications.set([]); // Lista vacía para que no rompa
-          this.isPublicationsLoading.set(false);
-        }
-     });
+    this.isPublicationsLoading.set(true);
+    this.publicationService.getAll(id).subscribe({
+      next: (response) => {
+        this.publications.set(response);
+        this.isPublicationsLoading.set(false);
+      },
+      error: (err) => {
+        console.error("Error al cargar publicaciones: ", err);
+        this.publications.set([]); // Lista vacía para que no rompa
+        this.isPublicationsLoading.set(false);
+      }
+    });
   }
 
 
 
   private loadComment(id: number): void {
-     this.isCommentsLoading.set(true);
-     this.balnearioService.getAllCommentsBySeaSideResortId(id).subscribe({
-        next: (response) => {
-          this.comments.set(response);
-          console.log(this.comments())
-          this.isCommentsLoading.set(false); 
-        },
-        error: (err) => {
-          console.error("Error al cargar publicaciones: ", err);
-          this.comments.set([]);
-          this.isCommentsLoading.set(false);
-        }
-     });
+    this.isCommentsLoading.set(true);
+    this.balnearioService.getAllCommentsBySeaSideResortId(id).subscribe({
+      next: (response) => {
+        this.comments.set(response);
+        console.log(this.comments())
+        this.isCommentsLoading.set(false);
+      },
+      error: (err) => {
+        console.error("Error al cargar publicaciones: ", err);
+        this.comments.set([]);
+        this.isCommentsLoading.set(false);
+      }
+    });
   }
+
+  goToBooking() {
+      this.router.navigate(['reservar/balneario', this.balneario()?.id]);
+    }
 }
