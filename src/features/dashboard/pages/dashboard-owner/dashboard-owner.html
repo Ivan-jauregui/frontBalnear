@@ -7,13 +7,22 @@
       <p class="text-sm text-slate-500 mt-1">Bienvenido de nuevo, visualiza el rendimiento de tu balnearios.</p>
     </div>
     <div class="flex gap-2">
+
+    <!--Botones de accion-->
+    <button class="inline-flex items-center justify-center px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-colors duration-200"
+    (click)="goToBeachTentPanel()">
+      Carpas
+    </button>
+
     <button class="inline-flex items-center justify-center px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-colors duration-200"
     (click)="goToSolitude()">
       Solcitudes
     </button>
+
     <button class="inline-flex items-center justify-center px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm rounded-xl shadow-sm transition-colors duration-200">
       Descargar Reporte
     </button>
+
     </div>
   </header>
 

@@ -1,0 +1,73 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <!-- Cabecera del Panel -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Panel de Carpas</h1>
+      <p class="text-sm text-gray-500">Distribución por filas y estado actual de las unidades</p>
+    </div>
+
+    <!-- Leyenda con colores vivos -->
+    <div class="flex flex-wrap gap-3 text-xs font-semibold">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-green-500 text-white shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-white"></span> Libre
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-600 text-white shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-white"></span> Reservado
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-red-500 text-white shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-white"></span> Ocupado
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-yellow-400 text-gray-900 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-gray-900"></span> Mantenimiento
+      </span>
+    </div>
+  </div>
+
+  <!-- Contenido Principal Agrupado por Filas -->
+  @if (beachTents(); as tents) {
+    @if (tents.length > 0) {
+      <div class="space-y-6">
+        @for (rowId of rowIds; track rowId) {
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+            <!-- Título de Fila Superior -->
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+              <h2 class="text-base font-bold text-gray-700 flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded bg-gray-100 text-gray-800 text-xs">Fila</span> 
+                {{ rowId }}
+              </h2>
+              <span class="text-xs text-gray-400 font-medium">
+                {{ groupedTents[rowId].length }} unidades
+              </span>
+            </div>
+
+            <!-- Grilla pequeña y compacta de carpas -->
+            <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-2.5">
+              @for (tent of groupedTents[rowId]; track tent.id) {
+                <div 
+                  class="flex flex-col items-center justify-center p-2 rounded-lg border transition-transform duration-150 hover:scale-105 cursor-pointer shadow-sm aspect-square"
+                  [ngClass]="getTentCardStyle(tent.status)"
+                  [title]="'Carpa #' + tent.number + ' (' + tent.status + ')'"
+                >
+                  <span class="text-[10px] uppercase font-medium opacity-80 tracking-tighter">Carpa</span>
+                  <span class="text-base font-extrabold">#{{ tent.number }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Estado vacío -->
+      <div class="text-center py-16 bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+        <p class="text-gray-500 font-medium">No se encontraron carpas registradas para este balneario.</p>
+      </div>
+    }
+  } @else {
+    <!-- Estado de Carga -->
+    <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-3">
+      @for (i of [1,2,3,4,5,6,7,8,9,10,11,12]; track i) {
+        <div class="h-20 bg-gray-100 rounded-lg animate-pulse"></div>
+      }
+    </div>
+  }
+</div>

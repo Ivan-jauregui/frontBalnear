@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserResponse } from '../../../shared/dto/response/UserResponse';
 import { SolicitudeResponse } from '../../solicitude/models/solicitude-response';
 import { BalnearioResponse } from '../../balneario/models/balnearioResponse';
+import { BeachTent } from '../../beach-tents/models/beach-tent';
 
 
 
@@ -25,8 +26,11 @@ export class DashboardService {
     }
 
     getByIdSolicitude(id:number):Observable<SolicitudeResponse>{
-      //return this.http.get<SolicitudeResponse>(this.apiUrl+"/solicitude"+id)
       return this.http.get<SolicitudeResponse>(this.apiUrl+"/solicitude/detail/"+id)
+    }
+    
+    getBeachTentsByBalnearioId(id:number): Observable<BeachTent[]>{
+      return this.http.get<BeachTent[]>(`${this.apiUrl}/beach-tents/${id}`)
     }
 
     getClients(): Observable<UserResponse[]>{

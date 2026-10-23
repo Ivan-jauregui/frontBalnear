@@ -45,7 +45,6 @@
     ];
 
     goToSolitude() {
-
       const id = this.balneario()?.id;
 
       if (!id) {
@@ -53,5 +52,15 @@
         return;
       }
       this.router.navigate(["/dashboard/solicitude/balneario", id])
+    }
+
+    goToBeachTentPanel(){
+      const id = this.balneario()?.id;
+
+      if (!id) {
+        console.log("Error en la peticion al servidor, reintentando...");
+        return;
+      }
+      this.router.navigate(["/dashboard/carpas",id])
     }
   }
