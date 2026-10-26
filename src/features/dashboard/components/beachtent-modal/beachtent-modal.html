@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Detalles de la Carpa N° {{ beachTent.number }}</h2>
+
+<mat-dialog-content>
+  <p><strong>Fila:</strong> {{ beachTent.rowId }}</p>
+  <p><strong>Estado Actual:</strong> {{ beachTent.status }}</p>
+  <!-- Agrega aquí más campos reales de tu modelo BeachTent si los tienes -->
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">Aceptar</button>
+</mat-dialog-actions>

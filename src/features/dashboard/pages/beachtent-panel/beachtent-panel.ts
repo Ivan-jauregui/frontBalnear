@@ -4,16 +4,20 @@ import { DashboardService } from '../../service/dashboard-service';
 import { BeachTent } from '../../../beach-tents/models/beach-tent';
 import { ActivatedRoute } from '@angular/router';
 import { beachTentStatus } from '../../../beach-tents/enum/beachtent-status';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { BeachtentModal } from '../../components/beachtent-modal/beachtent-modal';
 
 @Component({
   selector: 'app-beachtent-panel',
-  imports: [CommonModule, NgClass],
+  imports: [CommonModule, NgClass,MatDialogModule, MatButtonModule],
   templateUrl: './beachtent-panel.html',
   styleUrl: './beachtent-panel.css',
 })
 export class BeachtentPanel implements OnInit {
   private dashboardService = inject(DashboardService);
   private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
 
   beachTents = signal<BeachTent[] | null>(null);
 
@@ -22,6 +26,19 @@ export class BeachtentPanel implements OnInit {
     if (idParam) {
       this.loadBeachTents(+idParam);
     }
+  }
+
+  openModal(beachtent: BeachTent) {
+    const dialogRef = this.dialog.open(BeachtentModal, {
+      width: '400px',
+      disableClose: false, // Permite o impide cerrar al hacer clic afuera
+      data:beachtent
+    });
+
+    // Captura el resultado cuando el modal se cierra
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El modal se cerró. Resultado:', result);
+    });
   }
 
   loadBeachTents(id: number) {

@@ -47,6 +47,7 @@
                   class="flex flex-col items-center justify-center p-2 rounded-lg border transition-transform duration-150 hover:scale-105 cursor-pointer shadow-sm aspect-square"
                   [ngClass]="getTentCardStyle(tent.status)"
                   [title]="'Carpa #' + tent.number + ' (' + tent.status + ')'"
+                  (click)="openModal(tent)"
                 >
                   <span class="text-[10px] uppercase font-medium opacity-80 tracking-tighter">Carpa</span>
                   <span class="text-base font-extrabold">#{{ tent.number }}</span>
